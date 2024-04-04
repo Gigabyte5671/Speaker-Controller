@@ -1,0 +1,14 @@
+{
+	"name": "speaker-controller",
+	"version": "1.0.0",
+	"description": "",
+	"main": "controller.js",
+	"type": "module",
+	"scripts": {},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"dependencies": {
+		"serialport": "^12.0.0"
+	}
+}
