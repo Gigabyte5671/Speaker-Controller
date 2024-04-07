@@ -20,7 +20,7 @@ function getDevice () {
 	});
 }
 
-async function createPort () {
+async function connect () {
 	await new Promise(resolve => {
 		console.info('Searching for switch...');
 		const interval = setInterval(async () => {
@@ -38,7 +38,7 @@ async function createPort () {
 async function update () {
 	if (!await getDevice()) {
 		console.warn('\x1b[31mSwitch is no longer connected.\x1b[0m');
-		await createPort();
+		await connect();
 	}
 	// Query the speaker device.
 	exec(`reg query ${registryPath}${speakerDeviceRegistryKey} /f Level:0`, (error1, stdout1) => {
@@ -62,5 +62,5 @@ async function update () {
 }
 
 
-await createPort();
+await connect();
 await update();
