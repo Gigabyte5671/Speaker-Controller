@@ -4,7 +4,9 @@
 	"description": "",
 	"main": "controller.js",
 	"type": "module",
-	"scripts": {},
+	"scripts": {
+		"postinstall": "npm i -g @serialport/list"
+	},
 	"keywords": [],
 	"author": "",
 	"license": "MIT",
