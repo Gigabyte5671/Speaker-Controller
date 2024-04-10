@@ -23,3 +23,21 @@ The [`models`](./models/) directory contains some housing models that fit with [
 
 You can also find the [model source on OnShape](https://cad.onshape.com/documents/b996f80e98ba7dbd92c3a90e/w/50b2495923acaf03b7d63635/e/e429f6e0665596681b5c2419?renderMode=0&uiState=6615ad4f92329a0588dcb680).
 
+
+## Images
+Fully assembled:  
+![The assembled device](./images/pic-1-small.jpg)
+
+The Arduino and relay are slid into the right side of the housing:  
+![Inside the right side of the device](./images/pic-5-small.jpg)
+
+With the cover on, the USB port is accessible from this side of the device:  
+![Inside the right side of the device](./images/pic-3-small.jpg)
+
+On the opposite side, the two ends of the live wire are inserted into the screw terminals on the relay board:  
+![Inside the left side of the device](./images/pic-4-small.jpg)
+
+The terminals can be tightened down through a small hole in the top of the housing:  
+![Top of the device](./images/pic-2-small.jpg)
+
+*You can find full-size versions of these images in the [`images`](./images/) directory).*
