@@ -1,5 +1,7 @@
 # Speaker Controller
-Automatically turns my desk speakers on/off when I change the audio output in Windows.
+**Automatically turns my desk speakers on/off when I change the audio output in Windows.**
+
+Well, that's what I'm using this project for anyway. Although, it's essentially just a smart power bar - you can use it to switch any household appliance on/off.
 
 > [!WARNING]
 > This project deals with dangerous mains voltages. Do not attempt to replicate this project unless you are experienced with the hazards involved and are using the appropriate safety equipment.
@@ -14,8 +16,17 @@ In reality, all of the discreet components are part of [this board](https://www.
 
 
 ## Code
+### Arduino
 Code for the Arduino is located in the [`sketch`](./sketch/) directory.  
-The script to be run on the connected PC is in the [`controller`](./controller/) directory.
+This program simply listens for characters being sent by the USB host and toggles the relay's state accordingly. If the program receives a `'1'` the relay is turned on, `'0'` the relay is turned off.
+
+
+### PC
+The script to be run on the connected PC is in the [`controller`](./controller/) directory.  
+This script runs in the background, polling the registry for updates to the default audio output device. When the default device changes, it notifies the Arduino.
+
+> [!NOTE]
+> You'll need to run `cd controller && npm i` before running this script for the first time.
 
 
 ## Models
@@ -40,4 +51,4 @@ On the opposite side, the two ends of the live wire are inserted into the screw 
 The terminals can be tightened down through a small hole in the top of the housing:  
 ![Top of the device](./images/pic-2-small.jpg)
 
-*You can find full-size versions of these images in the [`images`](./images/) directory).*
+*You can find full-size versions of these images in the [`images`](./images/) directory.*
