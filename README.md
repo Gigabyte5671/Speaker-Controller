@@ -7,6 +7,8 @@ Well, that's what I'm using this project for anyway. Although, it's essentially 
 > This project deals with dangerous mains voltages. Do not attempt to replicate this project unless you are experienced with the hazards involved and are using the appropriate safety equipment.
 
 
+<br>
+
 ## Bill of Materials
 Components and materials I used:
 - [Duinotech Leonardo Tiny](https://www.jaycar.co.nz/leonardo-tiny-atmega32u4-main-board/p/XC4431)
@@ -16,13 +18,17 @@ Components and materials I used:
 - ~20m/~60g of [1.75mm filament](https://www.bits4bots.co.nz/products/esun-pla-1-75mm-1kg?variant=43675171356827)
 
 
-## Circuit Diagram
+<br>
+
+## Circuit
 This is a rough diagram of the circuit I'm using to control the speakers:  
 ![full circuit diagram](./images/circuit-1.svg)
 
 In reality, all of the discreet components are part of [this board](https://www.jaycar.co.nz/arduino-compatible-5v-relay/p/XC4419), and connected to the [Arduino](https://www.jaycar.co.nz/leonardo-tiny-atmega32u4-main-board/p/XC4431) like so:  
 ![simple circuit diagram](./images/circuit-2.svg)
 
+
+<br>
 
 ## Code
 ### Arduino
@@ -38,6 +44,8 @@ This script runs in the background, polling the registry for updates to the defa
 > You'll need to run `cd controller && npm i` before running this script for the first time.
 
 
+<br>
+
 ## Housing
 The [`models`](./models/) directory contains some housing models that fit with [my particular power bar](https://www.kmart.co.nz/product/arlec-4-outlet-surge-protected-powerboard-42153580/).
 
@@ -49,6 +57,8 @@ I printed these with eSun White PLA+, and the following settings:
 - 3 wall layers
 - 15% infill density
 
+
+<br>
 
 ## Images
 Fully assembled:  
