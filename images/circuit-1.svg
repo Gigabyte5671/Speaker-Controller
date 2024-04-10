@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Circuit Diagram, cdlibrary.dll 4.0.0.0 -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" width="540" height="400" xmlns="http://www.w3.org/2000/svg">
+<svg version="1.1" width="540" height="330" xmlns="http://www.w3.org/2000/svg">
 	<defs><style>text,.cls-1{fill:#888;font-family:Arial;font-size:11px;}.cls-2{stroke:#888;}.cls-3{stroke-linecap:square;stroke-width:2;}</style></defs>
-	<line x1="210" y1="130" x2="210" y2="190" class="cls-2 cls-3" />
-	<line x1="30" y1="130" x2="210" y2="130" class="cls-2 cls-3" />
-	<line x1="30" y1="130" x2="30" y2="250" class="cls-2 cls-3" />
-	<line x1="350" y1="320" x2="350" y2="380" class="cls-2 cls-3" />
-	<line x1="30" y1="380" x2="350" y2="380" class="cls-2 cls-3" />
-	<line x1="30" y1="270" x2="30" y2="380" class="cls-2 cls-3" />
-	<line x1="30" y1="270" x2="50" y2="270" class="cls-2 cls-3" />
-	<line x1="30" y1="250" x2="50" y2="250" class="cls-2 cls-3" />
+	<line x1="210" y1="150" x2="210" y2="190" class="cls-2 cls-3" />
+	<line x1="30" y1="150" x2="210" y2="150" class="cls-2 cls-3" />
+	<line x1="30" y1="150" x2="30" y2="190" class="cls-2 cls-3" />
+	<line x1="30" y1="310" x2="350" y2="310" class="cls-2 cls-3" />
+	<line x1="30" y1="200" x2="30" y2="310" class="cls-2 cls-3" />
+	<line x1="30" y1="190" x2="50" y2="190" class="cls-2 cls-3" />
+	<line x1="30" y1="200" x2="50" y2="200" class="cls-2 cls-3" />
 	<line x1="310" y1="190" x2="350" y2="190" class="cls-2 cls-3" />
 	<line x1="350" y1="150" x2="350" y2="190" class="cls-2 cls-3" />
 	<line x1="330" y1="150" x2="350" y2="150" class="cls-2 cls-3" />
@@ -19,23 +18,23 @@
 	<line x1="230" y1="260" x2="250" y2="260" class="cls-2 cls-3" />
 	<line x1="290" y1="260" x2="310" y2="260" class="cls-2 cls-3" />
 	<rect x="250" y="252" width="40" height="16" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
-	<text x="284" y="32" style="text-anchor:middle" dominant-baseline="baseline" transform="rotate(0, 270, 246)">240V</text>
-	<text x="270" y="246" style="text-anchor:middle" dominant-baseline="baseline" transform="rotate(0, 270, 246)">150 Ω</text>
+	<text x="284" y="32" style="text-anchor:middle" dominant-baseline="baseline">240V</text>
+	<text x="270" y="246" style="text-anchor:middle" dominant-baseline="baseline">150 Ω</text>
 	<line x1="170" y1="260" x2="230" y2="260" class="cls-2 cls-3" />
-	<path d="M 207,260 M 207,252 L 207,268 M 207,260 L 192,268 L 192,252 L 207,260" class="cls-1 cls-2" style="stroke-linecap:square;stroke-width:2" />
-	<path d="M 205,260 M 203,249 L 211,241 M 212,240 L 208,242 L 210,244 L 212,240 L 208,242" class="cls-1 cls-2" style="fill-opacity:0;stroke-linecap:square;stroke-width:2" />
-	<path d="M 205,260 M 209,256 L 217,248 M 218,247 L 214,249 L 216,251 L 218,247 L 214,249" class="cls-1 cls-2" style="fill-opacity:0;stroke-linecap:square;stroke-width:2" />
+	<path d="M 207,260 M 207,252 L 207,268 M 207,260 L 192,268 L 192,252 L 207,260" class="cls-1 cls-2 cls-3" />
+	<path d="M 205,260 M 203,249 L 211,241 M 212,240 L 208,242 L 210,244 L 212,240 L 208,242" class="cls-1 cls-2 cls-3" style="fill-opacity:0" />
+	<path d="M 205,260 M 209,256 L 217,248 M 218,247 L 214,249 L 216,251 L 218,247 L 214,249" class="cls-1 cls-2 cls-3" style="fill-opacity:0" />
 	<line x1="310" y1="190" x2="260" y2="190" class="cls-2 cls-3" />
-	<path d="M 278,190 M 278,182 L 278,198 M 278,190 L 293,198 L 293,182 L 278,190" class="cls-1 cls-2" style="stroke-linecap:square;stroke-width:2" />
+	<path d="M 278,190 M 278,182 L 278,198 M 278,190 L 293,198 L 293,182 L 278,190" class="cls-1 cls-2 cls-3" />
 	<line x1="350" y1="190" x2="350" y2="247" class="cls-2 cls-3" />
-	<line x1="350" y1="273" x2="350" y2="320" class="cls-2 cls-3" />
+	<line x1="350" y1="273" x2="350" y2="310" class="cls-2 cls-3" />
 	<line x1="310" y1="260" x2="336" y2="260" class="cls-2 cls-3" />
 	<line x1="335.5" y1="252" x2="335.5" y2="268" class="cls-2 cls-3" style="stroke-width:3" />
 	<line x1="350" y1="247" x2="335.5" y2="256" class="cls-2 cls-3" />
 	<line x1="335.5" y1="264" x2="350" y2="273" class="cls-2 cls-3" />
 	<ellipse cx="340" cy="260" rx="16" ry="16" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
-	<path d="M 342,267 L 346,265 L 347,272 L 341,268 L 343,267" class="cls-1 cls-2" style="fill-opacity:1;stroke-linecap:square;stroke-width:2" />
-	<text x="408" y="50" style="font-size:12px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 408, 50)">Speaker Neutral</text>
+	<path d="M 343,267 L 344,265.5 L 347,271 L 341,270 L 343,267" class="cls-1 cls-2 cls-3" style="fill-opacity:1" />
+	<text x="408" y="50" style="font-size:12px;text-anchor:start" dominant-baseline="middle">Speaker Neutral</text>
 	<line x1="390" y1="50" x2="397" y2="50" class="cls-2 cls-3" />
 	<ellipse cx="400" cy="50" rx="3" ry="3" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
 	<line x1="310" y1="50" x2="390" y2="50" class="cls-2 cls-3" />
@@ -43,13 +42,13 @@
 	<line x1="210" y1="50" x2="210" y2="110" class="cls-2 cls-3" />
 	<line x1="210" y1="50" x2="260" y2="50" class="cls-2 cls-3" />
 	<line x1="330" y1="120" x2="390" y2="120" class="cls-2 cls-3" />
-	<text x="408" y="120" style="font-size:12px;text-anchor:start" dominant-baseline="middle" transform="rotate(0, 408, 120)">Speaker Live</text>
+	<text x="408" y="120" style="font-size:12px;text-anchor:start" dominant-baseline="middle">Speaker Live</text>
 	<line x1="390" y1="120" x2="397" y2="120" class="cls-2 cls-3" />
 	<ellipse cx="400" cy="120" rx="3" ry="3" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
 	<line x1="260" y1="50" x2="273" y2="50" class="cls-2 cls-3" />
 	<ellipse cx="285" cy="50" rx="12" ry="12" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
 	<line x1="297" y1="50" x2="310" y2="50" class="cls-2 cls-3" />
-	<path d="M 285,50 M 277,50 A 4,4 180 1 1 285,50 A 4,4 180 1 0 293,50" class="cls-1 cls-2" style="fill-opacity:0;stroke-linecap:square;stroke-width:2" />
+	<path d="M 285,50 M 277,50 A 4,4 180 1 1 285,50 A 4,4 180 1 0 293,50" class="cls-1 cls-2 cls-3" style="fill-opacity:0" />
 	<rect x="240" y="80" width="80" height="80" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
 	<ellipse cx="260" cy="140" rx="5" ry="10" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
 	<ellipse cx="265" cy="140" rx="5" ry="10" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
@@ -68,73 +67,31 @@
 	<line x1="260" y1="110" x2="300" y2="100" class="cls-2 cls-3" />
 	<ellipse cx="300" cy="100" rx="2" ry="2" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
 	<ellipse cx="300" cy="120" rx="2" ry="2" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
-	<text x="280" y="90" style="text-anchor:middle" dominant-baseline="middle" transform="rotate(0, 280, 90)">Relay</text>
-	<text x="324" y="96" style="text-anchor:start" dominant-baseline="baseline" transform="rotate(0, 324, 96)">NC</text>
-	<text x="324" y="116" style="text-anchor:start" dominant-baseline="baseline" transform="rotate(0, 324, 116)">NO</text>
-	<text x="110" y="150" style="text-anchor:middle" dominant-baseline="middle" transform="rotate(0, 110, 150)">Arduino Leonardo Tiny</text>
-	<rect x="60" y="160" width="100" height="200" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
-	<line x1="160" y1="170" x2="170" y2="170" class="cls-2 cls-3" />
-	<text x="156" y="170" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 170)">SCL</text>
-	<line x1="160" y1="180" x2="170" y2="180" class="cls-2 cls-3" />
-	<text x="156" y="180" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 180)">SDA</text>
-	<line x1="160" y1="190" x2="170" y2="190" class="cls-2 cls-3" />
-	<text x="156" y="190" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 190)">AREF</text>
-	<line x1="160" y1="200" x2="170" y2="200" class="cls-2 cls-3" />
-	<text x="156" y="200" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 200)">GND</text>
+	<text x="280" y="90" style="text-anchor:middle" dominant-baseline="middle">Relay</text>
+	<text x="324" y="96" style="text-anchor:start" dominant-baseline="baseline">NC</text>
+	<text x="324" y="116" style="text-anchor:start" dominant-baseline="baseline">NO</text>
+	<text x="110" y="170" style="text-anchor:middle" dominant-baseline="middle">Arduino Leonardo Tiny</text>
+	<rect x="60" y="180" width="100" height="90" class="cls-1 cls-2" style="fill-opacity:0;stroke-width:2" />
+	<line x1="50" y1="190" x2="60" y2="190" class="cls-2 cls-3" />
+	<text x="64" y="190" style="text-anchor:start" dominant-baseline="middle">5V</text>
+	<line x1="50" y1="200" x2="60" y2="200" class="cls-2 cls-3" />
+	<text x="64" y="200" style="text-anchor:start" dominant-baseline="middle">GND</text>
+	<line x1="50" y1="210" x2="60" y2="210" class="cls-2 cls-3" />
+	<text x="64" y="210" style="text-anchor:start" dominant-baseline="middle">GND</text>
 	<line x1="50" y1="220" x2="60" y2="220" class="cls-2 cls-3" />
-	<text x="64" y="220" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 220)">IOREF</text>
-	<line x1="160" y1="220" x2="170" y2="220" class="cls-2 cls-3" />
-	<text x="156" y="220" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 220)">D13</text>
-	<line x1="50" y1="230" x2="60" y2="230" class="cls-2 cls-3" />
-	<text x="64" y="230" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 230)">RST</text>
-	<line x1="160" y1="230" x2="170" y2="230" class="cls-2 cls-3" />
-	<text x="156" y="230" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 230)">D12</text>
+	<text x="64" y="220" style="text-anchor:start" dominant-baseline="middle">VIN</text>
 	<line x1="50" y1="240" x2="60" y2="240" class="cls-2 cls-3" />
-	<text x="64" y="240" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 240)">3V3</text>
-	<line x1="160" y1="240" x2="170" y2="240" class="cls-2 cls-3" />
-	<text x="156" y="240" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 240)">D11</text>
+	<text x="64" y="240" style="text-anchor:start" dominant-baseline="middle">A0</text>
 	<line x1="50" y1="250" x2="60" y2="250" class="cls-2 cls-3" />
-	<text x="64" y="250" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 250)">5V</text>
-	<line x1="160" y1="250" x2="170" y2="250" class="cls-2 cls-3" />
-	<text x="156" y="250" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 250)">D10</text>
+	<text x="64" y="250" style="text-anchor:start" dominant-baseline="middle">A1</text>
 	<line x1="50" y1="260" x2="60" y2="260" class="cls-2 cls-3" />
-	<text x="64" y="260" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 260)">GND</text>
+	<text x="64" y="260" style="text-anchor:start" dominant-baseline="middle">A2</text>
+	<line x1="160" y1="240" x2="170" y2="240" class="cls-2 cls-3" />
+	<text x="156" y="240" style="text-anchor:end" dominant-baseline="middle">D11</text>
+	<line x1="160" y1="250" x2="170" y2="250" class="cls-2 cls-3" />
+	<text x="156" y="250" style="text-anchor:end" dominant-baseline="middle">D10</text>
 	<line x1="160" y1="260" x2="170" y2="260" class="cls-2 cls-3" />
-	<text x="156" y="260" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 260)">D9</text>
-	<line x1="50" y1="270" x2="60" y2="270" class="cls-2 cls-3" />
-	<text x="64" y="270" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 270)">GND</text>
-	<line x1="160" y1="270" x2="170" y2="270" class="cls-2 cls-3" />
-	<text x="156" y="270" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 270)">D8</text>
-	<line x1="50" y1="280" x2="60" y2="280" class="cls-2 cls-3" />
-	<text x="64" y="280" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 280)">VIN</text>
-	<line x1="160" y1="280" x2="170" y2="280" class="cls-2 cls-3" />
-	<text x="156" y="280" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 280)">D7</text>
-	<line x1="160" y1="290" x2="170" y2="290" class="cls-2 cls-3" />
-	<text x="156" y="290" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 290)">D6</text>
-	<line x1="50" y1="300" x2="60" y2="300" class="cls-2 cls-3" />
-	<text x="64" y="300" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 300)">A0</text>
-	<line x1="160" y1="300" x2="170" y2="300" class="cls-2 cls-3" />
-	<text x="156" y="300" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 300)">D5</text>
-	<line x1="50" y1="310" x2="60" y2="310" class="cls-2 cls-3" />
-	<text x="64" y="310" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 310)">A1</text>
-	<line x1="160" y1="310" x2="170" y2="310" class="cls-2 cls-3" />
-	<text x="156" y="310" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 310)">D4</text>
-	<line x1="50" y1="320" x2="60" y2="320" class="cls-2 cls-3" />
-	<text x="64" y="320" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 320)">A2</text>
-	<line x1="160" y1="320" x2="170" y2="320" class="cls-2 cls-3" />
-	<text x="156" y="320" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 320)">D3</text>
-	<line x1="50" y1="330" x2="60" y2="330" class="cls-2 cls-3" />
-	<text x="64" y="330" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 330)">A3</text>
-	<line x1="160" y1="330" x2="170" y2="330" class="cls-2 cls-3" />
-	<text x="156" y="330" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 330)">D2</text>
-	<line x1="50" y1="340" x2="60" y2="340" class="cls-2 cls-3" />
-	<text x="64" y="340" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 340)">A4</text>
-	<line x1="160" y1="340" x2="170" y2="340" class="cls-2 cls-3" />
-	<text x="156" y="340" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 340)">TX D1</text>
-	<line x1="50" y1="350" x2="60" y2="350" class="cls-2 cls-3" />
-	<text x="64" y="350" style="text-anchor:start" dominant-baseline="middle" transform="rotate(0, 64, 350)">A5</text>
-	<line x1="160" y1="350" x2="170" y2="350" class="cls-2 cls-3" />
-	<text x="156" y="350" style="text-anchor:end" dominant-baseline="middle" transform="rotate(0, 156, 350)">RX D0</text>
+	<text x="156" y="260" style="text-anchor:end" dominant-baseline="middle">D9</text>
 	<ellipse cx="210" cy="150" rx="2" ry="2" class="cls-1 cls-2" style="fill-opacity:1;stroke-width:2" />
 	<ellipse cx="350" cy="190" rx="2" ry="2" class="cls-1 cls-2" style="fill-opacity:1;stroke-width:2" />
 </svg>
