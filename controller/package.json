@@ -8,7 +8,7 @@
 		"postinstall": "npm i -g @serialport/list"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Giga",
 	"license": "MIT",
 	"dependencies": {
 		"serialport": "^12.0.0"

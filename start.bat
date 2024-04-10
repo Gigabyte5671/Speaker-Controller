@@ -1,1 +1,1 @@
-node controller.js
+node controller/index.js
