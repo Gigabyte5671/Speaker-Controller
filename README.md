@@ -38,7 +38,10 @@ This program simply listens for characters being sent by the USB host and toggle
 
 ### PC
 The script to be run on the connected PC is in the [`controller`](./controller/) directory.  
-This script runs in the background, polling the registry for updates to the default audio output device. When the default device changes, it notifies the Arduino.
+This script runs in the background, polling the registry for updates to the default audio output device. When the default device changes to one of the specified **"active"** devices, it instructs the Arduino to turn the relay **on**. When the default device changes to one of the specified **"inactive"** devices, it instructs the Arduino to turn the relay **off**.
+
+> [!INFO]
+> You can customise the list of "active" and "inactive" audio devices in the [config](./controller/config.js) file.
 
 > [!NOTE]
 > You'll need to run `cd controller && npm i` before running this script for the first time.
