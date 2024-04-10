@@ -3,6 +3,8 @@
 
 Well, that's what I'm using this project for anyway. Although, it's essentially just a smart power bar - you can use it to switch any household appliance on/off.
 
+<br>
+
 > [!WARNING]
 > This project deals with dangerous mains voltages. Do not attempt to replicate this project unless you are experienced with the hazards involved and are using the appropriate safety equipment.
 
@@ -40,7 +42,7 @@ This program simply listens for characters being sent by the USB host and toggle
 The script to be run on the connected PC is in the [`controller`](./controller/) directory.  
 This script runs in the background, polling the registry for updates to the default audio output device. When the default device changes to one of the specified **"active"** devices, it instructs the Arduino to turn the relay **on**. When the default device changes to one of the specified **"inactive"** devices, it instructs the Arduino to turn the relay **off**.
 
-> [!INFO]
+> [!TIP]
 > You can customise the list of "active" and "inactive" audio devices in the [config](./controller/config.js) file.
 
 > [!NOTE]
