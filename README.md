@@ -1,6 +1,9 @@
 # Speaker Controller
 Automatically turns my desk speakers on/off when I change the audio output in Windows.
 
+> [!WARNING]
+> This project deals with dangerous mains voltages. Do not attempt to replicate this project unless you are experienced with the hazards involved and are using the appropriate safety equipment.
+
 
 ## Circuit Diagram
 This is a rough diagram of the circuit I'm using to control the speakers:
