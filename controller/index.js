@@ -113,7 +113,8 @@ function setSwitchState (state) {
 		type: 'update-menu',
 		menu: {
 			...menu,
-			icon: state ? activeIcon : inactiveIcon
+			icon: state ? activeIcon : inactiveIcon,
+			tooltip: `Speakers are ${state ? 'on' : 'off'}`
 		}
 	});
 }
