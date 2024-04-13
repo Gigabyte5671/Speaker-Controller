@@ -1,6 +1,8 @@
 import { exec } from 'node:child_process';
 import { SerialPort } from 'serialport';
+import SysTray from 'systray';
 import { config } from './config.js';
+import { activeIcon, inactiveIcon } from './icons.js';
 
 const audioDevices = { active: [], inactive: [] };
 const registryPath = 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\MMDevices\\Audio\\Render\\';
@@ -8,7 +10,34 @@ const updateFrequency = 250;
 const baudRate = 9600;
 let previousState;
 let port;
+const menu = {
+	icon: inactiveIcon,
+	title: 'Speaker Controller',
+	tooltip: 'Speaker Controller',
+	items: [
+		{ title: 'Enable Speaker', enabled: true },
+		{ title: 'Disable Speaker', enabled: true },
+		{ title: 'Exit', enabled: true }
+	]
+};
+const systray = new SysTray.default({ menu });
 
+systray.onClick(action => {
+	switch (action.seq_id) {
+		case 0:	{
+			setSwitchState(true);
+			break;
+		}
+		case 1:	{
+			setSwitchState(false);
+			break;
+		}
+		case 2:	{
+			systray.kill();
+			break;
+		}
+	}
+});
 
 async function getAudioDeviceKeys () {
 	console.info('Loading audio devices...');
@@ -77,6 +106,18 @@ async function connect () {
 	});
 }
 
+function setSwitchState (state) {
+	port.write(String(Number(state)));
+	previousState = state;
+	systray.sendAction({
+		type: 'update-menu',
+		menu: {
+			...menu,
+			icon: state ? activeIcon : inactiveIcon
+		}
+	});
+}
+
 async function update () {
 	if (!await getSwitchDevice()) {
 		console.warn('\x1b[31mSwitch is no longer connected.\x1b[0m');
@@ -108,8 +149,7 @@ async function update () {
 	// Send the new state to the Arduino.
 	if (newState !== previousState) {
 		console.info('Default audio device changed to', newState ? 'Speakers.' : 'Headset.');
-		port.write(String(Number(newState)));
-		previousState = newState;
+		setSwitchState(newState);
 	}
 	setTimeout(update, updateFrequency);
 }
