@@ -1,4 +1,5 @@
 import { exec } from 'node:child_process';
+import { writeFile } from 'node:fs/promises';
 import { SerialPort } from 'serialport';
 import SysTray from 'systray';
 import { config } from './config.js';
@@ -10,6 +11,7 @@ const updateFrequency = 250;
 const baudRate = 9600;
 let previousState;
 let port;
+const logs = [];
 const menu = {
 	icon: inactiveIcon,
 	title: 'Speaker Controller',
@@ -39,8 +41,21 @@ systray.onClick(action => {
 	}
 });
 
+function log (message) {
+	const date = new Date();
+	const year = date.getFullYear();
+	const month = date.getMonth().toString().padStart(2, '0');
+	const day = date.getDate().toString().padStart(2, '0');
+	const hour = date.getHours().toString().padStart(2, '0');
+	const minute = date.getMinutes().toString().padStart(2, '0');
+	const second = date.getSeconds().toString().padStart(2, '0');
+	const logTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+	logs.push(`[${logTime}] ${message}`);
+	void writeFile('./log.txt', logs.join('\n'), { encoding: 'utf-8' });
+}
+
 async function getAudioDeviceKeys () {
-	console.info('Loading audio devices...');
+	log('  Loading audio devices...');
 	const allDeviceKeys = await new Promise(resolve => {
 		exec(`reg query ${registryPath}`, (error, stdout) => {
 			const output = [];
@@ -75,9 +90,9 @@ async function getAudioDeviceKeys () {
 		}
 	}
 	if (audioDevices.active.length <= 0 || audioDevices.inactive.length <= 0) {
-		console.warn('\x1b[31mMissing specified audio devices.\x1b[0m');
+		log('! Missing specified audio devices.');
 	} else {
-		console.info('\x1b[32mDevices loaded.\x1b[0m');
+		log('+ Devices loaded.');
 	}
 }
 
@@ -93,13 +108,13 @@ function getSwitchDevice () {
 
 async function connect () {
 	await new Promise(resolve => {
-		console.info('Searching for switch...');
+		log('  Searching for switch...');
 		const interval = setInterval(async () => {
 			const arduino = await getSwitchDevice();
 			if (arduino && arduino.path) {
 				clearInterval(interval);
 				port = new SerialPort({ path: arduino.path, baudRate });
-				console.info('\x1b[32mSwitch connected.\x1b[0m');
+				log('+ Switch connected.');
 				resolve();
 			}
 		}, updateFrequency);
@@ -117,11 +132,12 @@ function setSwitchState (state, manual) {
 			tooltip: `Speakers are ${state ? 'on' : 'off'}`
 		}
 	});
+	log(`  Switch ${state ? 'opened' : 'closed'}.`);
 }
 
 async function update () {
 	if (!await getSwitchDevice()) {
-		console.warn('\x1b[31mSwitch is no longer connected.\x1b[0m');
+		log('! Switch is no longer connected.');
 		await connect();
 	}
 	// Query the active devices.
@@ -149,7 +165,7 @@ async function update () {
 	const newState = activeLevel > inactiveLevel;
 	// Send the new state to the Arduino.
 	if (newState !== previousState) {
-		console.info('Default audio device changed to', newState ? 'Speakers.' : 'Headset.');
+		log(`  Default audio device changed to ${newState ? 'Speakers' : 'Headset'}.`);
 		setSwitchState(newState);
 	}
 	setTimeout(update, updateFrequency);
