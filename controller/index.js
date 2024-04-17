@@ -25,11 +25,11 @@ const systray = new SysTray.default({ menu });
 systray.onClick(action => {
 	switch (action.seq_id) {
 		case 0:	{
-			setSwitchState(true);
+			setSwitchState(true, true);
 			break;
 		}
 		case 1:	{
-			setSwitchState(false);
+			setSwitchState(false, true);
 			break;
 		}
 		case 2:	{
@@ -106,9 +106,9 @@ async function connect () {
 	});
 }
 
-function setSwitchState (state) {
+function setSwitchState (state, manual) {
+	if (!manual) previousState = state;
 	port.write(String(Number(state)));
-	previousState = state;
 	systray.sendAction({
 		type: 'update-menu',
 		menu: {
