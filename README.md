@@ -35,7 +35,7 @@ In reality, all of the discreet components are part of [this board](https://www.
 ## Code
 ### Arduino
 Code for the Arduino is located in the [`sketch`](./sketch/) directory.  
-This program simply listens for characters being sent by the USB host and toggles the relay's state accordingly. If the program receives a `'1'` the relay is turned on, `'0'` the relay is turned off.
+This program simply listens for characters being sent by the USB host and toggles the relay's state accordingly. If the program receives a `'1'` the relay is turned on, `'0'` the relay is turned off. The program also needs to receive a heartbeat message (`'2'`) at least once every 5 seconds for the relay to stay on.
 
 
 ### PC

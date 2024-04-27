@@ -121,6 +121,10 @@ async function connect () {
 	});
 }
 
+function sendHeartbeat () {
+	port.write('2');
+}
+
 function setSwitchState (state, manual) {
 	if (!manual) previousState = state;
 	port.write(String(Number(state)));
@@ -140,6 +144,7 @@ async function update () {
 		log('! Switch is no longer connected.');
 		await connect();
 	}
+	sendHeartbeat();
 	// Query the active devices.
 	let activeLevel = 0;
 	for (const device of audioDevices.active) {
