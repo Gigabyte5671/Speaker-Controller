@@ -21,10 +21,12 @@ watch(enabled, value => emit('update:modelValue', value));
 		<span class="light"></span>
 		<span class="bulb"></span>
 		<span class="rocker">
-			<span class="background"></span>
+			<span class="texture"></span>
 			<span class="off"></span>
 			<span class="on"></span>
 		</span>
+		<span class="ring"></span>
+		<span class="text">⚡Power</span>
 	</label>
 </template>
 
@@ -35,7 +37,6 @@ watch(enabled, value => emit('update:modelValue', value));
 	width: 150px;
 	height: 150px;
 	margin: auto;
-	background-color: #000;
 	background:
 		url('./assets/noise.png'),
 		radial-gradient(circle at 50% 75%, transparent, #fff1),
@@ -97,7 +98,7 @@ watch(enabled, value => emit('update:modelValue', value));
 		scale: 1 0.95;
 		translate: 0 -6.5px;
 
-		& .background {
+		& .texture {
 			position: absolute;
 			width: 87%;
 			height: 87%;
@@ -139,6 +140,39 @@ watch(enabled, value => emit('update:modelValue', value));
 		}
 	}
 
+	& .ring {
+		inset: -21px;
+		border: 3px solid #fff;
+		border-radius: 50%;
+		opacity: 0.3;
+		mix-blend-mode: soft-light;
+		mask-image: linear-gradient(25deg, #000 70%, transparent 120%);
+		clip-path: polygon(
+			0 0,
+			100% 0,
+			100% 100%,
+			80% 100%,
+			50% 50%,
+			20% 100%,
+			0 100%
+		);
+	}
+
+	& .text {
+		bottom: -2em;
+		margin-left: -11px;
+		color: inherit;
+		font-family: inherit;
+		font-size: 14px;
+		font-style: italic;
+		letter-spacing: 1px;
+		text-shadow: 0 1px 1px currentColor;
+		text-transform: uppercase;
+		white-space: nowrap;
+		filter: brightness(3) grayscale(1);
+		mix-blend-mode: soft-light;
+	}
+
 	&.enabled {
 		& .light {
 			background:
@@ -159,10 +193,25 @@ watch(enabled, value => emit('update:modelValue', value));
 	}
 
 	&.connected.enabled {
+		background:
+			url('./assets/noise.png'),
+			radial-gradient(circle at center, transparent 51%, #fba4 calc(51% + 1px), transparent 62%),
+			radial-gradient(circle at 50% 75%, transparent, #fff1),
+			radial-gradient(circle at center, #000 53.5%, #222 calc(53.5% + 1px), #222 61%, #030303 calc(61% + 1px));
+		background-size:
+			cover,
+			auto,
+			auto,
+			auto;
+		box-shadow:
+			0 4px 8px -4px #000,
+			0 3px 12px -3px #000b;
+
 		& .light {
 			background:
 				url('./assets/noise.png'),
 				radial-gradient(circle at 50% 55%, transparent 69%, #fff1 10%),
+				radial-gradient(25% 7% at 50% 6%, #fdc1 40%, transparent),
 				radial-gradient(circle at center, #fdd, #fba 10%, #f97 50%, transparent),
 				radial-gradient(circle at 50% 50%, transparent 50%, #d007 calc(50% + 1px));
 			filter: brightness(0.8) grayscale(0);
