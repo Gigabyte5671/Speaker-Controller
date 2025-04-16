@@ -1,15 +1,31 @@
 <script setup lang="ts">
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import { ref, watch } from 'vue';
+import { load, Store } from '@tauri-apps/plugin-store';
+import { onBeforeMount, ref, watch } from 'vue';
 import Led from './Led.vue';
 import Switch from './Switch.vue';
 import Toggle from './Toggle.vue';
 
 const autoEnable = ref(false);
 const connected = ref(false);
+const defaultName = 'Speakers';
 const enabled = ref(false);
-const name = ref('Speakers');
+const name = ref(defaultName);
 const showSettings = ref(false);
+let store: Store | undefined;
+
+async function loadSettings (): Promise<void> {
+	const store = await load('settings.json', { autoSave: false });
+	name.value = (await store.get<string>('device-name')) || defaultName;
+	autoEnable.value = (await store.get<boolean>('auto-enable')) ?? false;
+	await updateWindowTitle();
+}
+
+async function saveSettings (): Promise<void> {
+	await store?.set('device-name', name.value);
+	await store?.set('auto-enable', autoEnable.value);
+	await updateWindowTitle();
+}
 
 async function updateWindowTitle (): Promise<void> {
 	const state = connected.value
@@ -20,6 +36,10 @@ async function updateWindowTitle (): Promise<void> {
 
 watch(connected, updateWindowTitle, { immediate: true });
 watch(enabled, updateWindowTitle, { immediate: true });
+
+onBeforeMount(() => {
+	void loadSettings();
+});
 </script>
 
 <template>
@@ -51,7 +71,14 @@ watch(enabled, updateWindowTitle, { immediate: true });
 		<section class="settings-panel">
 			<label for="device-name">
 				<span class="text">Name:</span>
-				<input type="text" name="device-name" id="device-name" v-model="name">
+				<input
+					type="text"
+					name="device-name"
+					id="device-name"
+					autocomplete="off"
+					@input="saveSettings()"
+					v-model="name"
+				>
 			</label>
 			<label for="device">
 				<span class="text">Device:</span>
@@ -67,6 +94,7 @@ watch(enabled, updateWindowTitle, { immediate: true });
 				<Toggle
 					name="auto-enable"
 					title="Turn on the device as soon as it's connected."
+					@input="saveSettings()"
 					v-model="autoEnable"
 				/>
 			</label>
