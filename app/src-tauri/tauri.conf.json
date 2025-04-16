@@ -15,7 +15,8 @@
 				"title": "smart-switch",
 				"width": 250,
 				"height": 300,
-				"resizable": false
+				"resizable": false,
+				"maximizable": false
 			}
 		],
 		"security": {
