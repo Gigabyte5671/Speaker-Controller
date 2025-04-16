@@ -1,10 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { getCurrentWindow } from '@tauri-apps/api/window';
+import { ref, watch } from 'vue';
 import Switch from './Switch.vue';
 
 const connected = ref(false);
 const enabled = ref(false);
 const showSettings = ref(false);
+
+async function updateWindowTitle (): Promise<void> {
+	const state = connected.value
+		? enabled.value ? 'On' : 'Off'
+		: 'Disconnected';
+	await getCurrentWindow().setTitle(`Smart Switch | ${state}`);
+}
+
+watch(connected, updateWindowTitle, { immediate: true });
+watch(enabled, updateWindowTitle, { immediate: true });
 </script>
 
 <template>
