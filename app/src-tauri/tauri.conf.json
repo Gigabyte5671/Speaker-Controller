@@ -13,7 +13,7 @@
 		"windows": [
 			{
 				"title": "Smart Switch",
-				"width": 250,
+				"width": 270,
 				"height": 300,
 				"resizable": false,
 				"maximizable": false

@@ -3,6 +3,7 @@ import { ref, watch } from 'vue';
 
 defineProps<{
 	connected: boolean;
+	name: string;
 	modelValue: boolean;
 }>();
 
@@ -16,8 +17,8 @@ watch(enabled, value => emit('update:modelValue', value));
 </script>
 
 <template>
-	<label for="switch" class="switch" :class="{ connected, enabled }">
-		<input type="checkbox" id="switch" name="switch" v-model="enabled">
+	<label :for="name" class="switch" :class="{ connected, enabled }">
+		<input type="checkbox" :id="name" :name="name" v-model="enabled">
 		<span class="light"></span>
 		<span class="bulb"></span>
 		<span class="rocker">
