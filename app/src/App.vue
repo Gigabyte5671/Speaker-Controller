@@ -179,6 +179,7 @@ onBeforeMount(async () => {
 			href="https://github.com/Gigabyte5671/Speaker-Controller"
 			target="_blank"
 			rel="noreferrer"
+			title="View the source code for this app."
 			class="text source-link"
 		>
 			<img src="./assets/code_24dp_FFFFFF_FILL1_wght400_GRAD0_opsz24.svg" alt="">
