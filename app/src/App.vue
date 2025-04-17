@@ -145,6 +145,7 @@ onBeforeMount(async () => {
 					v-model="name"
 				>
 			</label>
+
 			<label for="device">
 				<span class="text">Device:</span>
 				<button
@@ -163,6 +164,7 @@ onBeforeMount(async () => {
 					>{{ device.port }}</option>
 				</select>
 			</label>
+
 			<label for="auto-enable" title="Turn on the device as soon as it's connected.">
 				<span class="text">Auto-On:</span>
 				<Led :on="autoEnable" />
@@ -401,7 +403,7 @@ button {
 	&.on img {
 		opacity: 1;
 		filter: drop-shadow(0 1000px 0 #4acfff) drop-shadow(0 0 3px #ddf7);
-			transform: translateY(-1000px);
+		transform: translateY(-1000px);
 	}
 
 	&.settings-toggle {
