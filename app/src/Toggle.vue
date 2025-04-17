@@ -118,16 +118,6 @@ const model = defineModel({ default: false });
 			border-radius: var(--ball-size) var(--ball-size) 3px 3px;
 			translate: 0 20px;
 			clip-path: polygon(
-				0 0,
-				100% 0,
-				80% 100%,
-				70% 100%,
-				60% 90%,
-				40% 90%,
-				30% 100%,
-				20% 100%
-			);
-			clip-path: polygon(
 				20% 0,
 				30% 0,
 				40% 10%,
