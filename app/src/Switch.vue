@@ -148,6 +148,7 @@ watch(() => props.modelValue, value => (enabled.value = value));
 		opacity: 0.3;
 		mix-blend-mode: soft-light;
 		mask-image: linear-gradient(25deg, #000 70%, transparent 120%);
+		pointer-events: none;
 		clip-path: polygon(
 			0 0,
 			100% 0,
@@ -172,6 +173,7 @@ watch(() => props.modelValue, value => (enabled.value = value));
 		white-space: nowrap;
 		filter: brightness(3) grayscale(1);
 		mix-blend-mode: soft-light;
+		pointer-events: none;
 	}
 
 	&.enabled {
