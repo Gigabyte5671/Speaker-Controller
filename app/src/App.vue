@@ -267,7 +267,7 @@ main {
 .text {
 	color: #ddd;
 	font-family: inherit;
-	font-size: 14px;
+	font-size: 13px;
 	font-style: italic;
 	letter-spacing: 1px;
 	text-shadow:
