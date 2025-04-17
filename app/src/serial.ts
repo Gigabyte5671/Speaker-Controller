@@ -1,84 +1,114 @@
 import { type PortInfo, SerialPort } from "tauri-plugin-serialplugin";
 
-let heartbeatInterval = -1;
-let connectCallback: ((serialPort: SerialPort) => void) | undefined;
-let disconnectCallback: (() => void) | undefined;
+export type Device = PortInfo & { port: string };
 
-export type Port = PortInfo & { port: string };
+export class Serial {
+	private static buffer?: string;
+	private static heartbeatInterval = -1;
+	private static connectCallback: (() => void) | undefined;
+	private static disconnectCallback: (() => void) | undefined;
+	private static errorCallback: (() => void) | undefined;
+	private static serialPort?: SerialPort;
 
-// List available ports
-export async function listPorts (): Promise<Array<Port>> {
-	const ports = await SerialPort.available_ports();
-	const portInfo = new Array<Port>();
-	for (const [port, value] of Object.entries(ports)) {
-		portInfo.push({ ...value, port });
+	private static async listAllDevices (): Promise<Array<Device>> {
+		try {
+			const portInfo = new Array<Device>();
+			const ports = await SerialPort.available_ports();
+			for (const [port, value] of Object.entries(ports)) {
+				portInfo.push({ ...value, port });
+			}
+			return portInfo;
+		} catch (error) {
+			console.error(error);
+			Serial.errorCallback?.();
+			return [];
+		}
 	}
-	return portInfo;
-}
 
-export async function getCompatibleDevices (): Promise<Array<Port>> {
-	const allPorts = await listPorts();
-	return allPorts.filter(port => {
-		return port.type === 'USB'
-			&& port.manufacturer.includes('Arduino')
-			&& port.product.includes('Arduino Leonardo');
-	});
-}
-
-export async function getDevice (port: string): Promise<Port | undefined> {
-	const devices = await getCompatibleDevices();
-	return devices.find(device => device.port === port);
-}
-
-export async function connect (port: string): Promise<SerialPort> {
-	const serialPort = new SerialPort({
-		path: port,
-		baudRate: 9600
-	});
-	await serialPort.open();
-	globalThis.clearInterval(heartbeatInterval);
-	heartbeatInterval = globalThis.setInterval(() => sendHeartbeat(serialPort), 100);
-	connectCallback?.(serialPort);
-	return serialPort;
-}
-
-export async function disable (serialPort: SerialPort): Promise<void> {
-	try {
-		await serialPort.write('0');
-	} catch (error) {
-		console.error(error);
-		void disconnect(serialPort);
+	public static async getCompatibleDevices (): Promise<Array<Device>> {
+		try {
+			const allPorts = await Serial.listAllDevices();
+			return allPorts.filter(port => {
+				return port.type === 'USB'
+					&& port.manufacturer.includes('Arduino')
+					&& port.product.includes('Arduino Leonardo');
+			});
+		} catch (error) {
+			console.error(error);
+			Serial.errorCallback?.();
+			return [];
+		}
 	}
-}
 
-export async function enable (serialPort: SerialPort): Promise<void> {
-	try {
-		await serialPort.write('1');
-	} catch (error) {
-		console.error(error);
-		void disconnect(serialPort);
+	public static async connect (port: string): Promise<void> {
+		try {
+			Serial.serialPort = new SerialPort({
+				path: port,
+				baudRate: 9600
+			});
+			await Serial.serialPort.open();
+			Serial.startHeartbeat();
+			Serial.connectCallback?.();
+		} catch (error) {
+			console.error(error);
+			Serial.errorCallback?.();
+		}
 	}
-}
 
-async function sendHeartbeat (serialPort: SerialPort): Promise<void> {
-	try {
-		await serialPort.write('2');
-	} catch (error) {
-		console.error(error);
-		void disconnect(serialPort);
+	public static async disconnect (): Promise<void> {
+		globalThis.clearInterval(Serial.heartbeatInterval);
+		await Serial.serialPort?.write('0');
+		await Serial.serialPort?.close();
+		Serial.disconnectCallback?.();
 	}
-}
 
-export function onConnect (callback: (serialPort: SerialPort) => void): void {
-	connectCallback = callback;
-}
+	private static startHeartbeat (): void {
+		globalThis.clearInterval(Serial.heartbeatInterval);
+		Serial.sendHeartbeat();
+		Serial.heartbeatInterval = globalThis.setInterval(Serial.sendHeartbeat, 250);
+	}
 
-export function onDisconnect (callback: () => void): void {
-	disconnectCallback = callback;
-}
+	private static async sendHeartbeat (): Promise<void> {
+		try {
+			await Serial.serialPort?.write(Serial.buffer || '2');
+			Serial.buffer = undefined;
+		} catch (error) {
+			console.error(error);
+			Serial.buffer = undefined;
+			void Serial.disconnect();
+			Serial.errorCallback?.();
+		}
+	}
 
-export async function disconnect (serialPort: SerialPort): Promise<void> {
-	globalThis.clearInterval(heartbeatInterval);
-	await serialPort.close();
-	disconnectCallback?.();
+	public static disable (): void {
+		try {
+			Serial.buffer = '0';
+		} catch (error) {
+			console.error(error);
+			void Serial.disconnect();
+			Serial.errorCallback?.();
+		}
+	}
+
+	public static enable (): void {
+		try {
+			Serial.buffer = '1';
+		} catch (error) {
+			console.error(error);
+			void Serial.disconnect();
+			Serial.errorCallback?.();
+		}
+	}
+
+	public static onConnect (callback: () => void): void {
+		Serial.connectCallback = callback;
+	}
+
+	public static onDisconnect (callback: () => void): void {
+		Serial.disconnectCallback = callback;
+	}
+
+	public static onError (callback: () => void): void {
+		Serial.errorCallback = callback;
+	}
 }

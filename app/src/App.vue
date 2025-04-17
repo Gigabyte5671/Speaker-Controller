@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { load, Store } from '@tauri-apps/plugin-store';
-import type { SerialPort } from 'tauri-plugin-serialplugin';
 import { onBeforeMount, ref, watch } from 'vue';
-import * as Serial from './serial';
+import { type Device, Serial } from './serial';
 import Led from './Led.vue';
 import Switch from './Switch.vue';
 import Toggle from './Toggle.vue';
 
 const autoEnable = ref(false);
-const availableDevices = ref(new Array<Serial.Port>());
+const availableDevices = ref(new Array<Device>());
 const connected = ref(false);
 const defaultName = 'Speakers';
 const device = ref<string>('None');
 const enabled = ref(false);
+const error = ref(false);
 const name = ref(defaultName);
 const showSettings = ref(false);
-let port: SerialPort | undefined;
 let store: Store | undefined;
 
 async function loadSettings (): Promise<void> {
@@ -35,33 +34,39 @@ async function saveSettings (): Promise<void> {
 }
 
 async function loadDevices (): Promise<void> {
+	error.value = false;
 	availableDevices.value = await Serial.getCompatibleDevices();
 	if (device.value.startsWith('COM')) {
-		await Serial.getDevice(device.value);
+		await Serial.connect(device.value);
 	}
 }
 
-function handleConnect (serialPort: SerialPort): void {
-	port = serialPort;
+function handleConnect (): void {
+	error.value = false;
 	connected.value = true;
-	if (autoEnable.value) {
-		void Serial.enable(serialPort);
+	if (enabled.value || autoEnable.value) {
 		enabled.value = true;
+		globalThis.setTimeout(Serial.enable, 100);
 	}
 }
 
 function handleDisconnect (): void {
-	port = undefined;
+	enabled.value = false;
+	connected.value = false;
+}
+
+function handleError (): void {
+	error.value = true;
 	enabled.value = false;
 	connected.value = false;
 }
 
 function togglePower (on: boolean): void {
-	if (!port) return
+	enabled.value = on;
 	if (on) {
-		void Serial.enable(port);
+		void Serial.enable();
 	} else {
-		void Serial.disable(port);
+		void Serial.disable();
 	}
 }
 
@@ -77,7 +82,7 @@ watch(enabled, updateWindowTitle, { immediate: true });
 
 watch(device, (current, previous) => {
 	if (previous.startsWith('COM')) {
-		port && Serial.disconnect(port);
+		void Serial.disconnect();
 	}
 	if (current.startsWith('COM')) {
 		void Serial.connect(current);
@@ -89,6 +94,7 @@ onBeforeMount(async () => {
 	await loadDevices();
 	Serial.onConnect(handleConnect);
 	Serial.onDisconnect(handleDisconnect);
+	Serial.onError(handleError);
 });
 </script>
 
@@ -105,6 +111,14 @@ onBeforeMount(async () => {
 			:model-value="enabled"
 			@update:model-value="togglePower"
 		/>
+
+		<div
+			class="error-indicator"
+			:class="{ error }"
+			:title="error ? 'An error has occurred. Please check the USB connection.' : ''"
+		>
+			<img src="./assets/warning_24dp_FFFFFF_FILL1_wght400_GRAD0_opsz24.svg" alt="">
+		</div>
 
 		<div class="status">
 			<Led :on="connected" />
@@ -185,8 +199,9 @@ main {
 
 	display: grid;
 	grid-template-columns: calc(100vw - 62px) 62px calc(100vw - 62px);
-	grid-template-rows: 1fr 48px;
+	grid-template-rows: 38px 1fr 48px;
 	grid-template-areas:
+		'.      error  settings'
 		'switch switch settings'
 		'status toggle source';
 	place-items: center;
@@ -264,7 +279,8 @@ main {
 
 .switch {
 	grid-area: switch;
-	margin-top: 40px;
+	align-self: flex-start;
+	margin-top: 12px;
 }
 
 .status {
@@ -280,13 +296,32 @@ main {
 	}
 }
 
+.error-indicator {
+	grid-area: error;
+	width: 34px;
+	height: 34px;
+	padding: 5px;
+	filter: drop-shadow(0 1px 3px #0008);
+
+	& img {
+		filter: brightness(0.1);
+	}
+
+	&.error img {
+		opacity: 0.9;
+		filter: drop-shadow(0 1000px 0 #ffc34a) drop-shadow(0 0 3px #ddf7);
+		transform: translateY(-1000px);
+	}
+}
+
 .settings-panel {
 	grid-area: settings;
 	display: flex;
 	flex-flow: column nowrap;
-	gap: 35px;
+	gap: 30px;
 	width: 100%;
 	height: 100%;
+	margin-top: 40px;
 	padding: 24px 24px 0 4px;
 
 	& label {

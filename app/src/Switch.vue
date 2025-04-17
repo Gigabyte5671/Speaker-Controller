@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
-defineProps<{
+const props = defineProps<{
 	connected: boolean;
 	name: string;
 	modelValue: boolean;
@@ -14,6 +14,7 @@ const emit = defineEmits<{
 const enabled = ref(false);
 
 watch(enabled, value => emit('update:modelValue', value));
+watch(() => props.modelValue, value => (enabled.value = value));
 </script>
 
 <template>
@@ -37,7 +38,6 @@ watch(enabled, value => emit('update:modelValue', value));
 	place-items: center;
 	width: 150px;
 	height: 150px;
-	margin: auto;
 	background:
 		url('./assets/noise.png'),
 		radial-gradient(circle at 50% 75%, transparent, #fff1),
