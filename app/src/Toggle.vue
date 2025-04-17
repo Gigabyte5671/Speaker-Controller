@@ -1,23 +1,14 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-
 defineProps<{
 	name: string;
-	modelValue: boolean;
 }>();
 
-const emit = defineEmits<{
-	'update:modelValue': [ boolean ];
-}>();
-
-const enabled = ref(false);
-
-watch(enabled, value => emit('update:modelValue', value));
+const model = defineModel({ default: false });
 </script>
 
 <template>
-	<div class="toggle" :class="{ enabled }">
-		<input type="checkbox" :id="name" :name="name" v-model="enabled">
+	<div class="toggle" :class="{ enabled: model }">
+		<input type="checkbox" :id="name" :name="name" v-model="model">
 		<span class="ring"></span>
 		<span class="nut"></span>
 		<span class="body"></span>
