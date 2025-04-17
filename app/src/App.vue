@@ -1,30 +1,68 @@
 <script setup lang="ts">
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { load, Store } from '@tauri-apps/plugin-store';
+import type { SerialPort } from 'tauri-plugin-serialplugin';
 import { onBeforeMount, ref, watch } from 'vue';
+import * as Serial from './serial';
 import Led from './Led.vue';
 import Switch from './Switch.vue';
 import Toggle from './Toggle.vue';
 
 const autoEnable = ref(false);
+const availableDevices = ref(new Array<Serial.Port>());
 const connected = ref(false);
 const defaultName = 'Speakers';
+const device = ref<string>('None');
 const enabled = ref(false);
 const name = ref(defaultName);
 const showSettings = ref(false);
+let port: SerialPort | undefined;
 let store: Store | undefined;
 
 async function loadSettings (): Promise<void> {
 	const store = await load('settings.json', { autoSave: false });
 	name.value = (await store.get<string>('device-name')) || defaultName;
+	device.value = (await store.get<string>('device-port')) || 'None';
 	autoEnable.value = (await store.get<boolean>('auto-enable')) ?? false;
 	await updateWindowTitle();
 }
 
 async function saveSettings (): Promise<void> {
 	await store?.set('device-name', name.value);
+	await store?.set('device-port', device.value);
 	await store?.set('auto-enable', autoEnable.value);
 	await updateWindowTitle();
+}
+
+async function loadDevices (): Promise<void> {
+	availableDevices.value = await Serial.getCompatibleDevices();
+	if (device.value.startsWith('COM')) {
+		await Serial.getDevice(device.value);
+	}
+}
+
+function handleConnect (serialPort: SerialPort): void {
+	port = serialPort;
+	connected.value = true;
+	if (autoEnable.value) {
+		void Serial.enable(serialPort);
+		enabled.value = true;
+	}
+}
+
+function handleDisconnect (): void {
+	port = undefined;
+	enabled.value = false;
+	connected.value = false;
+}
+
+function togglePower (on: boolean): void {
+	if (!port) return
+	if (on) {
+		void Serial.enable(port);
+	} else {
+		void Serial.disable(port);
+	}
 }
 
 async function updateWindowTitle (): Promise<void> {
@@ -37,8 +75,20 @@ async function updateWindowTitle (): Promise<void> {
 watch(connected, updateWindowTitle, { immediate: true });
 watch(enabled, updateWindowTitle, { immediate: true });
 
-onBeforeMount(() => {
-	void loadSettings();
+watch(device, (current, previous) => {
+	if (previous.startsWith('COM')) {
+		port && Serial.disconnect(port);
+	}
+	if (current.startsWith('COM')) {
+		void Serial.connect(current);
+	}
+});
+
+onBeforeMount(async () => {
+	await loadSettings();
+	await loadDevices();
+	Serial.onConnect(handleConnect);
+	Serial.onDisconnect(handleDisconnect);
 });
 </script>
 
@@ -52,7 +102,8 @@ onBeforeMount(() => {
 		<Switch
 			:connected
 			name="switch"
-			v-model="enabled"
+			:model-value="enabled"
+			@update:model-value="togglePower"
 		/>
 
 		<div class="status">
@@ -62,7 +113,7 @@ onBeforeMount(() => {
 
 		<button
 			class="settings-toggle"
-			:class="{ showSettings }"
+			:class="{ on: showSettings }"
 			@click="showSettings = !showSettings"
 		>
 			<img src="./assets/settings_24dp_FFFFFF_FILL1_wght400_GRAD0_opsz24.svg" alt="">
@@ -82,10 +133,20 @@ onBeforeMount(() => {
 			</label>
 			<label for="device">
 				<span class="text">Device:</span>
-				<select name="device" id="device">
-					<option value="1">Option 1</option>
-					<option value="2">Option 2</option>
-					<option value="3">Option 3</option>
+				<button
+					class="refresh-button on"
+					title="Refresh the list of available devices."
+					@click="loadDevices()"
+				>
+					<img src="./assets/cached_24dp_FFFFFF_FILL1_wght400_GRAD0_opsz24.svg" alt="">
+				</button>
+				<select name="device" id="device" v-model="device">
+					<option value="None">None</option>
+					<option
+						v-for="device of availableDevices"
+						:key="device.port"
+						:value="device.port"
+					>{{ device.port }}</option>
 				</select>
 			</label>
 			<label for="auto-enable" title="Turn on the device as soon as it's connected.">
@@ -124,7 +185,7 @@ main {
 
 	display: grid;
 	grid-template-columns: calc(100vw - 62px) 62px calc(100vw - 62px);
-	grid-template-rows: 1fr auto;
+	grid-template-rows: 1fr 48px;
 	grid-template-areas:
 		'switch switch settings'
 		'status toggle source';
@@ -225,14 +286,15 @@ main {
 	flex-flow: column nowrap;
 	gap: 35px;
 	width: 100%;
-	padding: 0 24px 0 4px;
+	height: 100%;
+	padding: 24px 24px 0 4px;
 
 	& label {
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: space-between;
 		align-items: center;
-		gap: 16px;
+		gap: 10px;
 
 		& .text {
 			min-width: 9ch;
@@ -241,11 +303,13 @@ main {
 
 	& input[type="text"], select {
 		width: 12ch;
+		height: 34px;
 		padding: 5px;
 		color: #ddd;
 		background: linear-gradient(180deg, #0a0a0a, #060606);
 		border: 2px solid #555;
 		border-radius: 6px;
+		outline: unset;
 		box-shadow:
 			0 3px 0 0 #080808,
 			0 4px 8px -4px #000;
@@ -268,6 +332,11 @@ main {
 button {
 	display: grid;
 	place-items: center;
+	flex-shrink: 0;
+	align-self: flex-start;
+	width: 34px;
+	height: 34px;
+	padding: 5px;
 	text-align: center;
 	background: linear-gradient(180deg, #262626, #202020);
 	border: unset;
@@ -289,23 +358,22 @@ button {
 		translate: 0 2px;
 	}
 
-	&.settings-toggle {
-		grid-area: toggle;
-		width: 34px;
-		height: 34px;
-		margin-bottom: 16px;
-		padding: 5px;
-		background-color: transparent;
-
-		&.showSettings img {
-			opacity: 1;
-			filter: drop-shadow(0 1000px 0 #4acfff) drop-shadow(0 0 3px #ddf7);
-  			transform: translateY(-1000px);
-		}
-	}
-
 	& img {
 		opacity: 0.3;
+	}
+
+	&.on img {
+		opacity: 1;
+		filter: drop-shadow(0 1000px 0 #4acfff) drop-shadow(0 0 3px #ddf7);
+			transform: translateY(-1000px);
+	}
+
+	&.settings-toggle {
+		grid-area: toggle;
+	}
+
+	&.refresh-button {
+		margin-left: -18px;
 	}
 }
 </style>
