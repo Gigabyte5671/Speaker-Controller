@@ -165,7 +165,11 @@ onBeforeMount(async () => {
 				</select>
 			</label>
 
-			<label for="auto-enable" title="Turn on the device as soon as it's connected.">
+			<label
+				for="auto-enable"
+				title="Turn on the device as soon as it's connected."
+				class="auto-enable-label"
+			>
 				<span class="text">Auto-On:</span>
 				<Led :on="autoEnable" />
 				<Toggle
@@ -333,6 +337,10 @@ main {
 		justify-content: space-between;
 		align-items: center;
 		gap: 10px;
+
+		&.auto-enable-label {
+			pointer-events: none;
+		}
 
 		& .text {
 			min-width: 9ch;

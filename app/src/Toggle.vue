@@ -47,6 +47,7 @@ watch(enabled, value => emit('update:modelValue', value));
 	box-shadow:
 		0 4px 8px -4px #000,
 		0 3px 12px -3px #0006;
+	pointer-events: all;
 
 	& > * {
 		position: absolute;
@@ -54,6 +55,7 @@ watch(enabled, value => emit('update:modelValue', value));
 
 	& input {
 		display: none;
+		inset: -15px;
 	}
 
 	& .nut {
