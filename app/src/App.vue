@@ -90,11 +90,11 @@ watch(device, (current, previous) => {
 });
 
 onBeforeMount(async () => {
-	await loadSettings();
-	await loadDevices();
 	Serial.onConnect(handleConnect);
 	Serial.onDisconnect(handleDisconnect);
 	Serial.onError(handleError);
+	await loadSettings();
+	await loadDevices();
 });
 </script>
 
