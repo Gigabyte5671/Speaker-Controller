@@ -1,7 +1,6 @@
 {
 	"$schema": "https://schema.tauri.app/config/2",
 	"productName": "Smart Switch",
-	"version": "0.9.0",
 	"identifier": "dev.zakweb.smart-switch",
 	"build": {
 		"beforeDevCommand": "npm run dev",
