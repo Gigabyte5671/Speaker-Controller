@@ -1,6 +1,6 @@
 {
 	"$schema": "https://schema.tauri.app/config/2",
-	"productName": "smart-switch",
+	"productName": "Smart Switch",
 	"version": "0.9.0",
 	"identifier": "dev.zakweb.smart-switch",
 	"build": {
@@ -16,7 +16,8 @@
 				"width": 270,
 				"height": 300,
 				"resizable": false,
-				"maximizable": false
+				"maximizable": false,
+				"devtools": false
 			}
 		],
 		"security": {
