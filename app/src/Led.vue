@@ -12,7 +12,7 @@ defineProps<{
 & .led {
 	width: 18px;
 	height: 18px;
-	background: radial-gradient(circle at center, #fff, #f46 30%, #000 50%);
+	background: radial-gradient(circle at center, #fff, #ff85a1 30%, #000 50%);
 	border-radius: 50%;
 	filter: grayscale(0.85) brightness(0.7);
 

@@ -316,7 +316,7 @@ main {
 
 	&.error img {
 		opacity: 0.9;
-		filter: drop-shadow(0 1000px 0 #ffc34a) drop-shadow(0 0 3px #ddf7);
+		filter: drop-shadow(0 1000px 0 #ffe285) drop-shadow(0 0 3px #ddf7);
 		transform: translateY(-1000px);
 	}
 }
@@ -414,7 +414,7 @@ button {
 
 	&.on img {
 		opacity: 1;
-		filter: drop-shadow(0 1000px 0 #4acfff) drop-shadow(0 0 3px #ddf7);
+		filter: drop-shadow(0 1000px 0 #85deff) drop-shadow(0 0 3px #ddf7);
 		transform: translateY(-1000px);
 	}
 
