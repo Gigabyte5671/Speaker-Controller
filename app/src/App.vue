@@ -314,10 +314,14 @@ main {
 		filter: brightness(0.1);
 	}
 
-	&.error img {
-		opacity: 0.9;
-		filter: drop-shadow(0 1000px 0 #ffe285) drop-shadow(0 0 3px #ddf7);
-		transform: translateY(-1000px);
+	&.error {
+		mask-image: radial-gradient(circle at center, #000, transparent 120%);
+
+		& img {
+			opacity: 0.9;
+			filter: drop-shadow(0 1000px 0 #ffe285) drop-shadow(0 0 3px #ddf7);
+			transform: translateY(-1000px);
+		}
 	}
 }
 
