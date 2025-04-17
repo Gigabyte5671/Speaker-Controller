@@ -325,7 +325,7 @@ main {
 	grid-area: settings;
 	display: flex;
 	flex-flow: column nowrap;
-	gap: 30px;
+	gap: 34px;
 	width: 100%;
 	height: 100%;
 	margin-top: 40px;
@@ -348,8 +348,8 @@ main {
 	}
 
 	& input[type="text"], select {
-		width: 12ch;
-		height: 34px;
+		width: 11ch;
+		height: 28px;
 		padding: 5px;
 		color: #ddd;
 		background: linear-gradient(180deg, #0a0a0a, #060606);
@@ -419,7 +419,10 @@ button {
 	}
 
 	&.refresh-button {
+		width: 28px;
+		height: 28px;
 		margin-left: -18px;
+		padding: 0;
 	}
 }
 </style>
