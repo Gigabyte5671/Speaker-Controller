@@ -360,6 +360,10 @@ main {
 			0 3px 0 0 #080808,
 			0 4px 8px -4px #000;
 	}
+
+	& option {
+		color: #000;
+	}
 }
 
 .source-link {
