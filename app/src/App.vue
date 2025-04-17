@@ -19,7 +19,7 @@ const showSettings = ref(false);
 let store: Store | undefined;
 
 async function loadSettings (): Promise<void> {
-	const store = await load('settings.json', { autoSave: false });
+	store = await load('settings.json', { autoSave: false });
 	name.value = (await store.get<string>('device-name')) || defaultName;
 	device.value = (await store.get<string>('device-port')) || 'None';
 	autoEnable.value = (await store.get<boolean>('auto-enable')) ?? false;
