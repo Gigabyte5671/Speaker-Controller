@@ -31,4 +31,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Smart-Switch.dmg
-        path: /Users/runner/work/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/dmg/Smart Switch_0.9.1_aarch64.dmg
+        path: /Users/runner/work/Speaker-Controller/Speaker-Controller/app/src-tauri/target/debug/bundle/dmg/Smart Switch_0.9.1_aarch64.dmg
