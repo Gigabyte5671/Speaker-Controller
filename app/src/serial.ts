@@ -17,6 +17,7 @@ export class Serial {
 			for (const [port, value] of Object.entries(ports)) {
 				portInfo.push({ ...value, port });
 			}
+			console.log('all devices:', portInfo);
 			return portInfo;
 		} catch (error) {
 			console.error(error);
@@ -28,11 +29,13 @@ export class Serial {
 	public static async getCompatibleDevices (): Promise<Array<Device>> {
 		try {
 			const allPorts = await Serial.listAllDevices();
-			return allPorts.filter(port => {
+			const c = allPorts.filter(port => {
 				return port.type === 'USB'
 					&& port.manufacturer.includes('Arduino')
 					&& port.product.includes('Arduino Leonardo');
 			});
+			console.log('compatible devices:', c);
+			return c;
 		} catch (error) {
 			console.error(error);
 			Serial.errorCallback?.();
@@ -41,11 +44,13 @@ export class Serial {
 	}
 
 	public static async connect (port: string): Promise<void> {
+		console.log('connect');
 		try {
 			Serial.serialPort = new SerialPort({
 				path: port,
 				baudRate: 9600
 			});
+			console.log('serialPort:', Serial.serialPort);
 			await Serial.serialPort.open();
 			Serial.startHeartbeat();
 			Serial.connectCallback?.();
@@ -56,6 +61,7 @@ export class Serial {
 	}
 
 	public static async disconnect (): Promise<void> {
+		console.log('disconnect');
 		globalThis.clearInterval(Serial.heartbeatInterval);
 		await Serial.serialPort?.write('0');
 		await Serial.serialPort?.close();
@@ -70,6 +76,7 @@ export class Serial {
 
 	private static async sendHeartbeat (): Promise<void> {
 		try {
+			console.log('sent:', Serial.buffer || '2');
 			await Serial.serialPort?.write(Serial.buffer || '2');
 			Serial.buffer = undefined;
 		} catch (error) {
