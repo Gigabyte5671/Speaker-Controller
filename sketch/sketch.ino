@@ -13,8 +13,10 @@ void loop() {
     char input = (char)Serial.read();
     if (input == '0') {
       digitalWrite(relay, LOW);
+      missedHeartbeats = 0;
     } else if (input == '1') {
       digitalWrite(relay, HIGH);
+      missedHeartbeats = 0;
     } else if (input == '2') {
       missedHeartbeats = 0;
     }
