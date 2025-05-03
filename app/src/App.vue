@@ -36,7 +36,7 @@ async function saveSettings (): Promise<void> {
 async function loadDevices (): Promise<void> {
 	error.value = false;
 	availableDevices.value = await Serial.getCompatibleDevices();
-	if (device.value.startsWith('COM')) {
+	if (device.value !== 'None') {
 		await Serial.connect(device.value);
 	}
 }
@@ -81,10 +81,10 @@ watch(connected, updateWindowTitle, { immediate: true });
 watch(enabled, updateWindowTitle, { immediate: true });
 
 watch(device, (current, previous) => {
-	if (previous.startsWith('COM')) {
+	if (previous !== 'None') {
 		void Serial.disconnect();
 	}
-	if (current.startsWith('COM')) {
+	if (current !== 'None') {
 		void Serial.connect(current);
 	}
 });

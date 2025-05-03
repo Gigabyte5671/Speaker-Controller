@@ -31,7 +31,8 @@ export class Serial {
 			return allPorts.filter(port => {
 				return port.type === 'USB'
 					&& port.manufacturer.includes('Arduino')
-					&& port.product.includes('Arduino Leonardo');
+					&& port.product.includes('Arduino Leonardo')
+					&& /^(?:com|\/dev\/cu.)/i.test(port.path);
 			});
 		} catch (error) {
 			console.error(error);
