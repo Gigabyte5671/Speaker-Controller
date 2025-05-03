@@ -1,6 +1,6 @@
 [package]
 name = "smart-switch"
-version = "0.9.1"
+version = "0.9.2"
 description = ""
 authors = ["Giga"]
 edition = "2021"
@@ -24,4 +24,3 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tauri-plugin-store = "2"
 tauri-plugin-serialplugin = "2.11.0"
-
