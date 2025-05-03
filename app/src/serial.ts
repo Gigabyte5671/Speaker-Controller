@@ -28,11 +28,12 @@ export class Serial {
 	public static async getCompatibleDevices (): Promise<Array<Device>> {
 		try {
 			const allPorts = await Serial.listAllDevices();
+			const filter = /^(?:com|\/dev\/cu.)/i;
 			return allPorts.filter(port => {
 				return port.type === 'USB'
 					&& port.manufacturer.includes('Arduino')
 					&& port.product.includes('Arduino Leonardo')
-					&& /^(?:com|\/dev\/cu.)/i.test(port.path);
+					&& (filter.test(port.path) || filter.test(port.port));
 			});
 		} catch (error) {
 			console.error(error);
