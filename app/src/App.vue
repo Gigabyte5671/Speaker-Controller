@@ -265,7 +265,7 @@ main {
 	}
 
 	& .layer-2.connected.enabled {
-		background: radial-gradient(circle at 50vw 115px, #f97 20%, #f974 50%, transparent 90%);
+		background: radial-gradient(circle at 50vw 130px, #f97 20%, #f974 50%, transparent 90%);
 		mix-blend-mode: soft-light;
 		opacity: 0.15;
 	}
@@ -287,7 +287,7 @@ main {
 .switch {
 	grid-area: switch;
 	align-self: flex-start;
-	margin-top: 12px;
+	margin-top: 16px;
 }
 
 .status {
@@ -351,7 +351,7 @@ main {
 	}
 
 	& input[type="text"], select {
-		width: 11ch;
+		width: 12ch;
 		height: 28px;
 		padding: 5px;
 		color: #ddd;
