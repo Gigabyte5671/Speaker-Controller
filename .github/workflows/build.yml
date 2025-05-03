@@ -1,0 +1,13 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - run: echo "This is a placeholder workflow"
