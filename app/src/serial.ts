@@ -1,4 +1,5 @@
 import { type PortInfo, SerialPort } from "tauri-plugin-serialplugin";
+import { clearInterval, setInterval } from 'worker-timers';
 
 export type Device = PortInfo & { port: string };
 
@@ -58,16 +59,16 @@ export class Serial {
 	}
 
 	public static async disconnect (): Promise<void> {
-		globalThis.clearInterval(Serial.heartbeatInterval);
+		clearInterval(Serial.heartbeatInterval);
 		await Serial.serialPort?.write('0');
 		await Serial.serialPort?.close();
 		Serial.disconnectCallback?.();
 	}
 
 	private static startHeartbeat (): void {
-		globalThis.clearInterval(Serial.heartbeatInterval);
+		clearInterval(Serial.heartbeatInterval);
 		Serial.sendHeartbeat();
-		Serial.heartbeatInterval = globalThis.setInterval(Serial.sendHeartbeat, 250);
+		Serial.heartbeatInterval = setInterval(Serial.sendHeartbeat, 250);
 	}
 
 	private static async sendHeartbeat (): Promise<void> {
