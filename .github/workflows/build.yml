@@ -31,7 +31,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Smart-Switch.dmg
-        path: /Users/runner/work/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/dmg/Smart Switch_0.9.1_aarch64.dmg
+        path: /Users/runner/work/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/dmg/Smart Switch_0.9.3_aarch64.dmg
 
   windows-build:
     runs-on: windows-latest
@@ -52,9 +52,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Smart-Switch.exe
-        path: /Users/runner/work/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/nsis/Smart Switch_0.9.1_x64-setup.exe
+        path: /Users/runner/work/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/nsis/Smart Switch_0.9.3_x64-setup.exe
     - name: Archive msi file
       uses: actions/upload-artifact@v4
       with:
         name: Smart-Switch.msi
-        path: /Users/runner/work/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/msi/Smart Switch_0.9.1_x64_en-US.msi
+        path: /Users/runner/work/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/msi/Smart Switch_0.9.3_x64_en-US.msi
