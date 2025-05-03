@@ -120,7 +120,7 @@ onBeforeMount(async () => {
 			<img src="./assets/warning_24dp_FILL1_wght400_GRAD0_opsz24.svg" alt="">
 		</div>
 
-		<div class="status">
+		<div class="status" :title="`The device is currently ${connected ? 'connected' : 'disconnected'}`">
 			<Led :on="connected" />
 			<span class="text">Connected</span>
 		</div>
