@@ -7,7 +7,54 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  macos-build:
     runs-on: macos-latest
     steps:
-    - run: echo "This is a placeholder workflow"
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        cache-dependency-path: ./app/package-lock.json
+        node-version: 20
+        cache: 'npm'
+    - run: npm ci
+      working-directory: ./app
+    - run: npm run tauri build
+      working-directory: ./app
+      env:
+        NODE_OPTIONS: "--max_old_space_size=4096"
+    - name: Archive app file
+      uses: actions/upload-artifact@v4
+      with:
+        name: Smart-Switch.app
+        path: /Users/runner/work/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/macos/Smart Switch.app
+    - name: Archive dmg file
+      uses: actions/upload-artifact@v4
+      with:
+        name: Smart-Switch.dmg
+        path: /Users/runner/work/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/dmg/Smart Switch_0.9.3_aarch64.dmg
+
+  windows-build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        cache-dependency-path: ./app/package-lock.json
+        node-version: 20
+        cache: 'npm'
+    - run: npm ci
+      working-directory: ./app
+    - run: npm run tauri build
+      working-directory: ./app
+      env:
+        NODE_OPTIONS: "--max_old_space_size=4096"
+    - name: Archive exe file
+      uses: actions/upload-artifact@v4
+      with:
+        name: Smart-Switch.exe
+        path: D:/a/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/nsis/Smart Switch_0.9.3_x64-setup.exe
+    - name: Archive msi file
+      uses: actions/upload-artifact@v4
+      with:
+        name: Smart-Switch.msi
+        path: D:/a/Speaker-Controller/Speaker-Controller/app/src-tauri/target/release/bundle/msi/Smart Switch_0.9.3_x64_en-US.msi

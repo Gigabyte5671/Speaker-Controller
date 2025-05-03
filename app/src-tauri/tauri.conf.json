@@ -1,0 +1,37 @@
+{
+	"$schema": "https://schema.tauri.app/config/2",
+	"productName": "Smart Switch",
+	"identifier": "dev.zakweb.smart-switch",
+	"build": {
+		"beforeDevCommand": "npm run dev",
+		"devUrl": "http://localhost:1420",
+		"beforeBuildCommand": "npm run build",
+		"frontendDist": "../dist"
+	},
+	"app": {
+		"windows": [
+			{
+				"title": "Smart Switch",
+				"width": 280,
+				"height": 310,
+				"resizable": false,
+				"maximizable": false,
+				"devtools": false
+			}
+		],
+		"security": {
+			"csp": null
+		}
+	},
+	"bundle": {
+		"active": true,
+		"targets": "all",
+		"icon": [
+			"icons/32x32.png",
+			"icons/128x128.png",
+			"icons/128x128@2x.png",
+			"icons/icon.icns",
+			"icons/icon.ico"
+		]
+	}
+}
