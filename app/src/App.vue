@@ -117,7 +117,7 @@ onBeforeMount(async () => {
 			:class="{ error }"
 			:title="error ? 'An error has occurred. Please check the USB connection.' : ''"
 		>
-			<img src="./assets/warning_24dp_FFFFFF_FILL1_wght400_GRAD0_opsz24.svg" alt="">
+			<img src="./assets/warning_24dp_FILL1_wght400_GRAD0_opsz24.svg" alt="">
 		</div>
 
 		<div class="status">
@@ -130,7 +130,7 @@ onBeforeMount(async () => {
 			:class="{ on: showSettings }"
 			@click="showSettings = !showSettings"
 		>
-			<img src="./assets/settings_24dp_FFFFFF_FILL1_wght400_GRAD0_opsz24.svg" alt="">
+			<img src="./assets/settings_24dp_FILL1_wght400_GRAD0_opsz24.svg" alt="">
 		</button>
 
 		<section class="settings-panel">
@@ -153,7 +153,7 @@ onBeforeMount(async () => {
 					title="Refresh the list of available devices."
 					@click="loadDevices()"
 				>
-					<img src="./assets/cached_24dp_FFFFFF_FILL1_wght400_GRAD0_opsz24.svg" alt="">
+					<img src="./assets/cached_24dp_FILL1_wght400_GRAD0_opsz24.svg" alt="">
 				</button>
 				<select name="device" id="device" v-model="device">
 					<option value="None">None</option>
@@ -188,7 +188,7 @@ onBeforeMount(async () => {
 			title="View the source code for this app."
 			class="text source-link"
 		>
-			<img src="./assets/code_24dp_FFFFFF_FILL1_wght400_GRAD0_opsz24.svg" alt="">
+			<img src="./assets/code_24dp_FILL1_wght400_GRAD0_opsz24.svg" alt="">
 			Source
 		</a>
 
@@ -311,16 +311,15 @@ main {
 	filter: drop-shadow(0 1px 3px #0008);
 
 	& img {
-		filter: brightness(0.1);
+		filter: brightness(0.1) grayscale(1);
 	}
 
 	&.error {
-		mask-image: radial-gradient(circle at center, #000, transparent 120%);
+		filter: drop-shadow(0 0 3px #ddf7) drop-shadow(0 0 12px #ffe28538);
 
 		& img {
-			opacity: 0.9;
-			filter: drop-shadow(0 1000px 0 #ffe285) drop-shadow(0 0 3px #ddf7);
-			transform: translateY(-1000px);
+			filter: unset;
+			mask-image: radial-gradient(circle at center, #000, transparent 120%);
 		}
 	}
 }
@@ -414,12 +413,12 @@ button {
 
 	& img {
 		opacity: 0.3;
+		filter: grayscale(1);
 	}
 
 	&.on img {
 		opacity: 1;
-		filter: drop-shadow(0 1000px 0 #85deff) drop-shadow(0 0 3px #ddf7);
-		transform: translateY(-1000px);
+		filter: drop-shadow(0 0 3px #ddf7);
 	}
 
 	&.settings-toggle {
