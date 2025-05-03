@@ -1,10 +1,16 @@
 import { type PortInfo, SerialPort } from "tauri-plugin-serialplugin";
 import { clearInterval, setInterval } from 'worker-timers';
 
+enum Command {
+	Disable = '0',
+	Enable = '1',
+	Heartbeat = '2'
+}
+
 export type Device = PortInfo & { port: string };
 
 export class Serial {
-	private static buffer?: string;
+	private static buffer?: Command;
 	private static heartbeatInterval = -1;
 	private static connectCallback: (() => void) | undefined;
 	private static disconnectCallback: (() => void) | undefined;
@@ -60,7 +66,7 @@ export class Serial {
 
 	public static async disconnect (): Promise<void> {
 		clearInterval(Serial.heartbeatInterval);
-		await Serial.serialPort?.write('0');
+		await Serial.serialPort?.write(Command.Disable);
 		await Serial.serialPort?.close();
 		Serial.disconnectCallback?.();
 	}
@@ -73,7 +79,7 @@ export class Serial {
 
 	private static async sendHeartbeat (): Promise<void> {
 		try {
-			await Serial.serialPort?.write(Serial.buffer || '2');
+			await Serial.serialPort?.write(Serial.buffer || Command.Heartbeat);
 			Serial.buffer = undefined;
 		} catch (error) {
 			console.error(error);
@@ -85,7 +91,7 @@ export class Serial {
 
 	public static disable (): void {
 		try {
-			Serial.buffer = '0';
+			Serial.buffer = Command.Disable;
 		} catch (error) {
 			console.error(error);
 			void Serial.disconnect();
@@ -95,7 +101,7 @@ export class Serial {
 
 	public static enable (): void {
 		try {
-			Serial.buffer = '1';
+			Serial.buffer = Command.Enable;
 		} catch (error) {
 			console.error(error);
 			void Serial.disconnect();
