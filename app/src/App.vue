@@ -214,6 +214,7 @@ main {
 	place-items: center;
 	width: 200vw;
 	height: 100vh;
+	filter: brightness(1.1);
 	transition: 0.2s ease translate;
 	user-select: none;
 
