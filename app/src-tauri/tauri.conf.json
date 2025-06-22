@@ -16,6 +16,7 @@
 				"height": 310,
 				"resizable": false,
 				"maximizable": false,
+				"backgroundThrottling": "disabled",
 				"devtools": false
 			}
 		],
