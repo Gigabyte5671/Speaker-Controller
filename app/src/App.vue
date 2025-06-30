@@ -214,7 +214,7 @@ main {
 	place-items: center;
 	width: 200vw;
 	height: 100vh;
-	filter: brightness(1.1);
+	filter: brightness(1.2);
 	transition: 0.2s ease translate;
 	user-select: none;
 
@@ -268,7 +268,7 @@ main {
 	& .layer-2.connected.enabled {
 		background: radial-gradient(circle at 50vw 130px, #f97 20%, #f974 50%, transparent 90%);
 		mix-blend-mode: soft-light;
-		opacity: 0.15;
+		opacity: 0.1;
 	}
 }
 
