@@ -83,6 +83,7 @@ function togglePower (on: boolean): void {
 }
 
 async function updateWindowTitle (): Promise<void> {
+	if (!icons.on || !icons.off) await loadIcons();
 	const icon = connected.value && enabled.value
 		? icons.on
 		: icons.off;
