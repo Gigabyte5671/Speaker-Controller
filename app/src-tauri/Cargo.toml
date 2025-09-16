@@ -1,6 +1,6 @@
 [package]
 name = "smart-switch"
-version = "0.10.0"
+version = "0.10.1"
 description = ""
 authors = ["Giga"]
 edition = "2021"
