@@ -6,6 +6,8 @@ import { type Device, Serial } from './serial';
 import Led from './Led.vue';
 import Switch from './Switch.vue';
 import Toggle from './Toggle.vue';
+import IconOn from '../icon-on.ico?url';
+import IconOff from '../icon-off.ico?url';
 
 const autoEnable = ref(false);
 const availableDevices = ref(new Array<Device>());
@@ -14,6 +16,7 @@ const defaultName = 'Speakers';
 const device = ref<string>('None');
 const enabled = ref(false);
 const error = ref(false);
+const icons = { on: <ArrayBuffer | undefined> undefined, off: <ArrayBuffer | undefined> undefined };
 const name = ref(defaultName);
 const showSettings = ref(false);
 let store: Store | undefined;
@@ -39,6 +42,15 @@ async function loadDevices (): Promise<void> {
 	if (device.value !== 'None') {
 		await Serial.connect(device.value);
 	}
+}
+
+async function loadIcons (): Promise<void> {
+	const [on, off] = await Promise.all([
+		fetch(IconOn),
+		fetch(IconOff)
+	]);
+	icons.on = await on.arrayBuffer();
+	icons.off = await off.arrayBuffer();
 }
 
 function handleConnect (): void {
@@ -71,10 +83,15 @@ function togglePower (on: boolean): void {
 }
 
 async function updateWindowTitle (): Promise<void> {
+	const icon = connected.value && enabled.value
+		? icons.on
+		: icons.off;
 	const state = connected.value
 		? enabled.value ? 'On' : 'Off'
 		: 'Disconnected';
-	await getCurrentWindow().setTitle(`${name.value} | ${state}`);
+	const appWindow = getCurrentWindow();
+	await appWindow.setTitle(`${name.value} | ${state}`);
+	if (icon) await appWindow.setIcon(icon);
 }
 
 watch(connected, updateWindowTitle, { immediate: true });
@@ -95,6 +112,7 @@ onBeforeMount(async () => {
 	Serial.onError(handleError);
 	await loadSettings();
 	await loadDevices();
+	await loadIcons();
 });
 </script>
 
