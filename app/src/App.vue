@@ -173,7 +173,12 @@ onBeforeMount(async () => {
 				>
 					<img src="./assets/cached_24dp_FILL1_wght400_GRAD0_opsz24.svg" alt="">
 				</button>
-				<select name="device" id="device" v-model="device">
+				<select
+					name="device"
+					id="device"
+					@input="saveSettings()"
+					v-model="device"
+				>
 					<option value="None">None</option>
 					<option
 						v-for="device of availableDevices"
