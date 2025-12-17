@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getCurrentWindow } from '@tauri-apps/api/window';
+import { getCurrentWindow, UserAttentionType } from '@tauri-apps/api/window';
 import { message, type MessageDialogOptions } from '@tauri-apps/plugin-dialog';
 import { onBeforeMount, ref, watch } from 'vue';
 import { type Device, Serial } from './serial';
@@ -77,6 +77,11 @@ function handleError (e: unknown): void {
 	connected.value = false;
 }
 
+async function requestUserAttention (): Promise<void> {
+	const appWindow = getCurrentWindow();
+	await appWindow.requestUserAttention(UserAttentionType.Informational);
+}
+
 function togglePower (on: boolean): void {
 	enabled.value = on;
 	if (on) {
@@ -116,6 +121,7 @@ async function viewError (): Promise<void> {
 
 watch(connected, updateWindowTitle, { immediate: true });
 watch(enabled, updateWindowTitle, { immediate: true });
+watch(error, (value, previous) => value && !previous && requestUserAttention(), { immediate: true });
 
 watch(device, (current, previous) => {
 	if (previous !== 'None') {
