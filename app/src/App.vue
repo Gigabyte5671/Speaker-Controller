@@ -263,16 +263,16 @@ main {
 	}
 
 	& .layer-1 {
-		background: url('./assets/Poliigon_MetalPaintedMatte_7037/Poliigon_MetalPaintedMatte_7037_Normal.png');
+		background: url('./assets/Poliigon_MetalPaintedMatte_7037/Poliigon_MetalPaintedMatte_7037_Normal-small.png');
 		background-position: center;
-		background-size: 350%;
+		background-size: 175%;
 		filter: grayscale(1) brightness(0.29) contrast(1.3);
 	}
 
 	& .layer-2 {
-		background: url('./assets/Poliigon_MetalPaintedMatte_7037/Poliigon_MetalPaintedMatte_7037_BaseColor.png');
+		background: url('./assets/Poliigon_MetalPaintedMatte_7037/Poliigon_MetalPaintedMatte_7037_BaseColor-small.png');
 		background-position: center;
-		background-size: 350%;
+		background-size: 175%;
 		mix-blend-mode: color-dodge;
 	}
 }
