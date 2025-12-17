@@ -161,7 +161,7 @@ onBeforeMount(async () => {
 
 		<div class="status" :title="`The device is currently ${connected ? 'connected' : 'disconnected'}.`">
 			<Led :on="connected" />
-			<span class="text">Connected</span>
+			<span class="text">Connection</span>
 		</div>
 
 		<button
@@ -216,7 +216,7 @@ onBeforeMount(async () => {
 				title="Turn on the device as soon as it's connected."
 				class="auto-enable-label"
 			>
-				<span class="text">Auto-On:</span>
+				<span class="auto-enable text">Auto-On:</span>
 				<Led :on="autoEnable" />
 				<Toggle
 					name="auto-enable"
@@ -342,7 +342,7 @@ main {
 	justify-self: flex-start;
 	display: flex;
 	align-items: center;
-	gap: 5px;
+	gap: 18px;
 	margin: 0 0 16px 20px;
 
 	& .text {
@@ -413,6 +413,10 @@ main {
 
 	& option {
 		color: #000;
+	}
+
+	& .auto-enable.text {
+		margin-inline-end: 6px;
 	}
 }
 
