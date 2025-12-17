@@ -9,6 +9,7 @@
     "core:default",
     "core:window:allow-set-icon",
     "core:window:allow-set-title",
+    "dialog:default",
     "opener:default",
     "serialplugin:default",
     "store:default"

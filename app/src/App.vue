@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getCurrentWindow } from '@tauri-apps/api/window';
+import { message, type MessageDialogOptions } from '@tauri-apps/plugin-dialog';
 import { onBeforeMount, ref, watch } from 'vue';
 import { type Device, Serial } from './serial';
 import { Settings } from './settings';
@@ -18,6 +19,7 @@ const error = ref(false);
 const icons = { on: <ArrayBuffer | undefined> undefined, off: <ArrayBuffer | undefined> undefined };
 const name = ref(Settings.defaults['device-name']);
 const showSettings = ref(false);
+let errorObject: unknown = undefined;
 
 async function loadSettings (): Promise<void> {
 	const settings = await Settings.load();
@@ -68,7 +70,8 @@ function handleDisconnect (): void {
 	connected.value = false;
 }
 
-function handleError (): void {
+function handleError (e: unknown): void {
+	errorObject = e;
 	error.value = true;
 	enabled.value = false;
 	connected.value = false;
@@ -94,6 +97,21 @@ async function updateWindowTitle (): Promise<void> {
 	const appWindow = getCurrentWindow();
 	await appWindow.setTitle(`${name.value} | ${state}`);
 	if (icon) await appWindow.setIcon(icon);
+}
+
+async function viewError (): Promise<void> {
+	if (!error.value || !errorObject) return;
+	const errorString = `"${String(errorObject)}"`;
+	const content = `The following error has occurred:\n    ${errorString}`;
+	const options: MessageDialogOptions = {
+		title: name.value,
+		kind: 'warning',
+		buttons: { ok: 'Copy', cancel: 'Dismiss' }
+	};
+	const response = await message(content, options);
+	if (response === 'Copy') {
+		await navigator.clipboard.writeText(errorString);
+	}
 }
 
 watch(connected, updateWindowTitle, { immediate: true });
@@ -136,6 +154,7 @@ onBeforeMount(async () => {
 			class="error-indicator"
 			:class="{ error }"
 			:title="error ? 'An error has occurred. Please check the USB connection.' : 'No problems detected.'"
+			@click="viewError()"
 		>
 			<img src="./assets/warning_24dp_FILL1_wght400_GRAD0_opsz24.svg" alt="">
 		</div>

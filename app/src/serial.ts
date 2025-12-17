@@ -14,7 +14,7 @@ export class Serial {
 	private static heartbeatInterval = -1;
 	private static connectCallback: (() => void) | undefined;
 	private static disconnectCallback: (() => void) | undefined;
-	private static errorCallback: (() => void) | undefined;
+	private static errorCallback: ((error: unknown) => void) | undefined;
 	private static serialPort?: SerialPort;
 
 	private static async listAllDevices (): Promise<Array<Device>> {
@@ -27,7 +27,7 @@ export class Serial {
 			return portInfo;
 		} catch (error) {
 			console.error(error);
-			Serial.errorCallback?.();
+			Serial.errorCallback?.(error);
 			return [];
 		}
 	}
@@ -44,7 +44,7 @@ export class Serial {
 			});
 		} catch (error) {
 			console.error(error);
-			Serial.errorCallback?.();
+			Serial.errorCallback?.(error);
 			return [];
 		}
 	}
@@ -60,7 +60,7 @@ export class Serial {
 			Serial.connectCallback?.();
 		} catch (error) {
 			console.error(error);
-			Serial.errorCallback?.();
+			Serial.errorCallback?.(error);
 		}
 	}
 
@@ -85,7 +85,7 @@ export class Serial {
 			console.error(error);
 			Serial.buffer = undefined;
 			void Serial.disconnect();
-			Serial.errorCallback?.();
+			Serial.errorCallback?.(error);
 		}
 	}
 
@@ -95,7 +95,7 @@ export class Serial {
 		} catch (error) {
 			console.error(error);
 			void Serial.disconnect();
-			Serial.errorCallback?.();
+			Serial.errorCallback?.(error);
 		}
 	}
 
@@ -105,7 +105,7 @@ export class Serial {
 		} catch (error) {
 			console.error(error);
 			void Serial.disconnect();
-			Serial.errorCallback?.();
+			Serial.errorCallback?.(error);
 		}
 	}
 
@@ -117,7 +117,7 @@ export class Serial {
 		Serial.disconnectCallback = callback;
 	}
 
-	public static onError (callback: () => void): void {
+	public static onError (callback: (error: unknown) => void): void {
 		Serial.errorCallback = callback;
 	}
 }
