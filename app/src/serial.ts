@@ -1,4 +1,5 @@
-import { type PortInfo, SerialPort } from "tauri-plugin-serialplugin";
+import { getCurrentWindow } from '@tauri-apps/api/window';
+import { type PortInfo, SerialPort } from 'tauri-plugin-serialplugin';
 import { clearInterval, setInterval } from 'worker-timers';
 
 enum Command {
@@ -65,16 +66,20 @@ export class Serial {
 	}
 
 	public static async disconnect (): Promise<void> {
-		clearInterval(Serial.heartbeatInterval);
+		Serial.stopHeartbeat();
 		await Serial.serialPort?.write(Command.Disable);
 		await Serial.serialPort?.close();
 		Serial.disconnectCallback?.();
 	}
 
 	private static startHeartbeat (): void {
-		clearInterval(Serial.heartbeatInterval);
+		Serial.stopHeartbeat();
 		Serial.sendHeartbeat();
 		Serial.heartbeatInterval = setInterval(Serial.sendHeartbeat, 250);
+	}
+
+	private static stopHeartbeat (): void {
+		clearInterval(Serial.heartbeatInterval);
 	}
 
 	private static async sendHeartbeat (): Promise<void> {
@@ -119,5 +124,17 @@ export class Serial {
 
 	public static onError (callback: (error: unknown) => void): void {
 		Serial.errorCallback = callback;
+	}
+
+	static {
+		const appWindow = getCurrentWindow();
+		appWindow.listen('tauri://close-requested', async () => {
+			try {
+				Serial.stopHeartbeat();
+				await Serial.serialPort?.write(Command.Disable);
+			} finally {
+				void appWindow.destroy();
+			}
+		});
 	}
 }
