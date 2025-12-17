@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import { load, Store } from '@tauri-apps/plugin-store';
 import { onBeforeMount, ref, watch } from 'vue';
 import { type Device, Serial } from './serial';
+import { Settings } from './settings';
 import Led from './Led.vue';
 import Switch from './Switch.vue';
 import Toggle from './Toggle.vue';
@@ -12,32 +12,28 @@ import IconOff from '../icon-off.ico?url';
 const autoEnable = ref(false);
 const availableDevices = ref(new Array<Device>());
 const connected = ref(false);
-const defaultName = 'Speakers';
-const device = ref<string>('None');
+const device = ref<string>(Settings.defaults['device-port']);
 const enabled = ref(false);
 const error = ref(false);
 const icons = { on: <ArrayBuffer | undefined> undefined, off: <ArrayBuffer | undefined> undefined };
-const name = ref(defaultName);
+const name = ref(Settings.defaults['device-name']);
 const showSettings = ref(false);
-let store: Store | undefined;
 
 async function loadSettings (): Promise<void> {
-	const defaults = {
-		'device-name': defaultName,
-		'device-port': 'None',
-		'auto-enable': false
-	};
-	store = await load('settings.json', { autoSave: false, defaults });
-	name.value = (await store.get<string>('device-name')) || defaults['device-name'];
-	device.value = (await store.get<string>('device-port')) || defaults['device-port'];
-	autoEnable.value = (await store.get<boolean>('auto-enable')) ?? defaults['auto-enable'];
+	const settings = await Settings.load();
+	autoEnable.value = settings.autoEnable;
+	device.value = settings.device;
+	name.value = settings.name;
 	await updateWindowTitle();
 }
 
 async function saveSettings (): Promise<void> {
-	await store?.set('device-name', name.value);
-	await store?.set('device-port', device.value);
-	await store?.set('auto-enable', autoEnable.value);
+	const settings = {
+		autoEnable: autoEnable.value,
+		device: device.value,
+		name: name.value
+	};
+	await Settings.save(settings);
 	await updateWindowTitle();
 }
 
