@@ -22,10 +22,15 @@ const showSettings = ref(false);
 let store: Store | undefined;
 
 async function loadSettings (): Promise<void> {
-	store = await load('settings.json', { autoSave: false });
-	name.value = (await store.get<string>('device-name')) || defaultName;
-	device.value = (await store.get<string>('device-port')) || 'None';
-	autoEnable.value = (await store.get<boolean>('auto-enable')) ?? false;
+	const defaults = {
+		'device-name': defaultName,
+		'device-port': 'None',
+		'auto-enable': false
+	};
+	store = await load('settings.json', { autoSave: false, defaults });
+	name.value = (await store.get<string>('device-name')) || defaults['device-name'];
+	device.value = (await store.get<string>('device-port')) || defaults['device-port'];
+	autoEnable.value = (await store.get<boolean>('auto-enable')) ?? defaults['auto-enable'];
 	await updateWindowTitle();
 }
 
