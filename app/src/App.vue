@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getCurrentWindow, UserAttentionType } from '@tauri-apps/api/window';
+import { writeText as writeToClipboard } from '@tauri-apps/plugin-clipboard-manager';
 import { message, type MessageDialogOptions } from '@tauri-apps/plugin-dialog';
 import { onBeforeMount, ref, watch } from 'vue';
 import { type Device, Serial } from './serial';
@@ -115,7 +116,7 @@ async function viewError (): Promise<void> {
 	};
 	const response = await message(content, options);
 	if (response === 'Copy') {
-		await navigator.clipboard.writeText(errorString);
+		await writeToClipboard(errorString);
 	}
 }
 
