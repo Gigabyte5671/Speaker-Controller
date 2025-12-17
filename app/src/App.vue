@@ -139,12 +139,12 @@ onBeforeMount(async () => {
 		<div
 			class="error-indicator"
 			:class="{ error }"
-			:title="error ? 'An error has occurred. Please check the USB connection.' : ''"
+			:title="error ? 'An error has occurred. Please check the USB connection.' : 'No problems detected.'"
 		>
 			<img src="./assets/warning_24dp_FILL1_wght400_GRAD0_opsz24.svg" alt="">
 		</div>
 
-		<div class="status" :title="`The device is currently ${connected ? 'connected' : 'disconnected'}`">
+		<div class="status" :title="`The device is currently ${connected ? 'connected' : 'disconnected'}.`">
 			<Led :on="connected" />
 			<span class="text">Connected</span>
 		</div>
@@ -152,6 +152,7 @@ onBeforeMount(async () => {
 		<button
 			class="settings-toggle"
 			:class="{ on: showSettings }"
+			:title="showSettings ? 'Hide the settings panel.' : 'Show the settings panel.'"
 			@click="showSettings = !showSettings"
 		>
 			<img src="./assets/settings_24dp_FILL1_wght400_GRAD0_opsz24.svg" alt="">
