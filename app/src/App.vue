@@ -181,6 +181,7 @@ onBeforeMount(async () => {
 					name="device-name"
 					id="device-name"
 					autocomplete="off"
+					spellcheck="false"
 					@input="saveSettings()"
 					v-model="name"
 				>
