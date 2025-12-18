@@ -33,6 +33,18 @@
 			"icons/128x128@2x.png",
 			"icons/icon.icns",
 			"icons/icon.ico"
-		]
+		],
+		"windows": {
+			"nsis": {
+				"headerImage": "images/nsis-header.bmp",
+				"installerIcon": "icons/icon.ico",
+				"sidebarImage": "images/nsis-sidebar.bmp",
+				"startMenuFolder": "Smart Switch"
+			},
+			"wix": {
+				"bannerPath": "images/msi-banner.bmp",
+				"dialogImagePath": "images/msi-dialog.bmp"
+			}
+		}
 	}
 }
