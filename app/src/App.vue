@@ -322,7 +322,7 @@ main {
 	}
 
 	& .layer-2.connected.enabled {
-		background: radial-gradient(circle at 50vw 130px, #f97 20%, #f974 50%, transparent 90%);
+		background: radial-gradient(circle at 50vw 130px, #fed 5%, #f97 20%, #f974 50%, transparent 90%);
 		mix-blend-mode: soft-light;
 		opacity: 0.1;
 	}
