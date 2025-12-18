@@ -1,5 +1,11 @@
 import { load, type Store } from '@tauri-apps/plugin-store';
 
+enum Setting {
+	AutoEnable = 'auto-enable',
+	DeviceName = 'device-name',
+	DevicePort = 'device-port'
+}
+
 interface SettingsData {
 	autoEnable: boolean;
 	device: string;
@@ -9,26 +15,26 @@ interface SettingsData {
 export class Settings {
 	private static store: Store | undefined;
 	public static readonly defaults = {
-		'device-name': 'Speakers',
-		'device-port': 'None',
-		'auto-enable': false
+		[Setting.DeviceName]: 'Speakers',
+		[Setting.DevicePort]: 'None',
+		[Setting.AutoEnable]: false
 	};
 
 	public static async load (): Promise<SettingsData> {
 		this.store = await load('settings.json', { autoSave: false, defaults: this.defaults });
-		const autoEnable = await this.store.get<boolean>('auto-enable');
-		const device = await this.store.get<string>('device-port');
-		const name = await this.store.get<string>('device-name');
+		const autoEnable = await this.store.get<boolean>(Setting.AutoEnable);
+		const device = await this.store.get<string>(Setting.DevicePort);
+		const name = await this.store.get<string>(Setting.DeviceName);
 		return {
-			autoEnable: autoEnable ?? this.defaults['auto-enable'],
-			device: device || this.defaults['device-port'],
-			name: name || this.defaults['device-name']
+			autoEnable: autoEnable ?? this.defaults[Setting.AutoEnable],
+			device: device || this.defaults[Setting.DevicePort],
+			name: name || this.defaults[Setting.DeviceName]
 		};
 	}
 
 	public static async save (settings: SettingsData): Promise<void> {
-		await this.store?.set('auto-enable', settings.autoEnable);
-		await this.store?.set('device-port', settings.device);
-		await this.store?.set('device-name', settings.name);
+		await this.store?.set(Setting.AutoEnable, settings.autoEnable);
+		await this.store?.set(Setting.DevicePort, settings.device);
+		await this.store?.set(Setting.DeviceName, settings.name);
 	}
 }
