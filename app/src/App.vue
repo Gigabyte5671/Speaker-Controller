@@ -209,7 +209,7 @@ onBeforeMount(async () => {
 				<select
 					name="device"
 					id="device"
-					@input="saveSettings()"
+					@change="saveSettings()"
 					v-model="device"
 				>
 					<option value="None">None</option>
@@ -231,7 +231,7 @@ onBeforeMount(async () => {
 				<Toggle
 					name="auto-enable"
 					title="Turn on the device as soon as it's connected."
-					@input="saveSettings()"
+					@change="saveSettings()"
 					v-model="autoEnable"
 				/>
 			</label>
