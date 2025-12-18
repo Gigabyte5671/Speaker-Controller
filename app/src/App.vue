@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getVersion } from '@tauri-apps/api/app';
 import { getCurrentWindow, UserAttentionType } from '@tauri-apps/api/window';
 import { writeText as writeToClipboard } from '@tauri-apps/plugin-clipboard-manager';
 import { message, type MessageDialogOptions } from '@tauri-apps/plugin-dialog';
@@ -20,6 +21,7 @@ const error = ref(false);
 const icons = { on: <ArrayBuffer | undefined> undefined, off: <ArrayBuffer | undefined> undefined };
 const name = ref(Settings.defaults['device-name']);
 const showSettings = ref(false);
+const version = ref('');
 let errorObject: unknown = undefined;
 
 async function loadSettings (): Promise<void> {
@@ -140,6 +142,7 @@ onBeforeMount(async () => {
 	await loadSettings();
 	await loadDevices();
 	await loadIcons();
+	version.value = await getVersion();
 });
 </script>
 
@@ -241,8 +244,8 @@ onBeforeMount(async () => {
 			title="View the source code for this app."
 			class="text source-link"
 		>
-			<img src="./assets/code_24dp_FILL1_wght400_GRAD0_opsz24.svg" alt="">
-			Source
+			<span v-if="version">Version {{ version }}</span>
+			<span v-else>View Source</span>
 		</a>
 
 		<div class="lighting">
@@ -435,7 +438,8 @@ main {
 	gap: 5px;
 	margin: 0 24px 16px 0;
 	color: #fff;
-	text-underline-offset: 3px;
+	font-size: 11px;
+	text-decoration: none;
 	opacity: 1;
 	mix-blend-mode: soft-light;
 }
